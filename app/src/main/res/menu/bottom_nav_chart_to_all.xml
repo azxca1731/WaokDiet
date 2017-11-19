@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <item
+        android:title=""
+        android:id="@+id/action_to_all_view_left"
+        android:enabled="true"
+        app:showAsAction="ifRoom"></item>
+
+    <item
+        android:id="@+id/action_to_all_view"
+        android:enabled="true"
+        android:icon="@drawable/ic_menu"
+        android:title="전체보기"
+        app:showAsAction="ifRoom"></item>
+
+
+    <item
+        android:id="@+id/action_to_all_view_right"
+        android:title=""
+        android:enabled="true"
+        app:showAsAction="ifRoom"></item>
+
+
+
+
+</menu>

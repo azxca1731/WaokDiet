@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <item
+        android:title=""
+        android:id="@+id/action_friend_left"
+        android:enabled="true"
+        app:showAsAction="ifRoom"></item>
+
+    <item
+        android:id="@+id/action_add_friend"
+        android:enabled="true"
+        android:icon="@drawable/ic_person_white"
+        android:title="친구추가"
+        app:showAsAction="ifRoom"></item>
+
+
+    <item
+        android:id="@+id/action_friend_right"
+        android:title=""
+        android:enabled="true"
+        app:showAsAction="ifRoom"></item>
+
+
+
+
+</menu>

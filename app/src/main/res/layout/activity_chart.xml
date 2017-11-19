@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+    <CalendarView
+        android:layout_width="match_parent"
+        android:id="@+id/calendar"
+        android:layout_height="0px"
+        android:layout_weight="1"
+
+        android:minDate="01/01/2017"
+        android:maxDate="12/31/2099"
+
+        android:weekSeparatorLineColor="#00ff00"
+        android:focusedMonthDateColor="#ff0000"
+        android:unfocusedMonthDateColor="#0000ff"
+        android:selectedWeekBackgroundColor="#ffff00"
+
+        android:showWeekNumber="false"
+        />
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottom_nav_in_chart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:itemBackground="@color/colorNavPrimary"
+        app:itemIconTint="@drawable/nav_item_color_state"
+        app:itemTextColor="@drawable/nav_item_color_state"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:menu="@menu/bottom_nav_chart_to_all" />
+
+</LinearLayout>

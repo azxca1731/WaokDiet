@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1087804551462",
+    "firebase_url": "https://helloworld-6e172.firebaseio.com",
+    "project_id": "helloworld-6e172",
+    "storage_bucket": "helloworld-6e172.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1087804551462:android:767fe3f133ba094f",
+        "android_client_info": {
+          "package_name": "org.androidtown.dietapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1087804551462-g3k1qbc4m0l258ul69tdrktp3mssq3l4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.androidtown.dietapp",
+            "certificate_hash": "826ee43efa74b591a0212ca6017a02f799bbc81b"
+          }
+        },
+        {
+          "client_id": "1087804551462-hlemq2g7op70mb37gidqi27t64f718fe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDkL3xQhcA1Wrn80r-pS2qaw6O7_n6XPPc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1087804551462-hlemq2g7op70mb37gidqi27t64f718fe.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

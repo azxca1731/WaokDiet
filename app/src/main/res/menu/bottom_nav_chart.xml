@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <item
+        android:id="@+id/action_viewCalorie"
+        android:enabled="true"
+        android:icon="@drawable/ic_menu"
+        android:title="칼로리로 보기"
+        app:showAsAction="ifRoom"></item>
+
+    <item
+        android:id="@+id/action_viewPie"
+        android:enabled="true"
+        android:icon="@drawable/ic_userinfo"
+        android:title="탄단지로 보기"
+        app:showAsAction="ifRoom"></item>
+
+    <item
+        android:id="@+id/action_viewInterest"
+        android:enabled="true"
+        android:icon="@drawable/ic_chart"
+        android:title="음식경향 보기"
+        app:showAsAction="ifRoom"></item>
+
+</menu>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="PieChart"><attr format="color" name="textColor"/><attr format="color" name="chartColor"/><attr format="color" name="centerColor"/><attr format="string" name="aboutChart"/><attr format="color" name="aboutTextColor"/><attr format="float" name="aboutTextSize"/><attr format="float" name="textSize"/><attr format="boolean" name="equalPartition"/></declare-styleable>
+    <string name="app_name">Scatter</string>
+</resources>
