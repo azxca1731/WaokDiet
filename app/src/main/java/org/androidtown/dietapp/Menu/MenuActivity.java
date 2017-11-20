@@ -2,7 +2,6 @@ package org.androidtown.dietapp.Menu;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,7 +10,6 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -27,7 +25,6 @@ import org.androidtown.dietapp.DTO.FoodItem;
 import org.androidtown.dietapp.R;
 
 import java.util.ArrayList;
-import java.util.UUID;
 
 public class MenuActivity extends AppCompatActivity{
     private FirebaseDatabase database;
@@ -141,9 +138,14 @@ public class MenuActivity extends AppCompatActivity{
                     FoodItem foodItem = snapshot.getValue(FoodItem.class);
                     if(foodItem!= null) {
                         foodItemList.add(foodItem);
-                        if(foodItem.getBarcode()!=null){
+
+                        //TODO:
+                        //나중에 음식들 다 리셋하고 일단 속성은 만들어야함
+                        /*
+                         if(foodItem.getBarcode()!=""){
                             barcodeItemList.add(foodItem);
                         }
+                         */
                     }
                 }
                 //sort부분 시작
@@ -167,30 +169,34 @@ public class MenuActivity extends AppCompatActivity{
     {
         super.onActivityResult(requestCode, resultCode, data);
 
-        // QR코드/ 바코드를 스캔한 결과
-        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        // result.getFormatName() : 바코드 종류
-        // result.getContents() : 바코드 값
-        if (result.getContents()==null) {
-            return;
-        }
-        final FoodItem selectedItem=datastructure.binarySearch(result.getContents());
-      //  Log.d("TAG", "onActivityResult: "+selectedItem.toString());
+        if (requestCode == IntentIntegrator.REQUEST_CODE) {
+            // QR코드/ 바코드를 스캔한 결과
+            IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+            // result.getFormatName() : 바코드 종류
+            // result.getContents() : 바코드 값
+            if (result.getContents() == null) {
+                return;
+            }
+            /*
+            final FoodItem selectedItem = datastructure.binarySearch(result.getContents());
+            //  Log.d("TAG", "onActivityResult: "+selectedItem.toString());
+            if (selectedItem == null) {
+                Toast.makeText(getApplicationContext(), "찾지 못하였습니다", Toast.LENGTH_LONG).show();
+            }
 
-        if(selectedItem==null){
-            Toast.makeText(getApplicationContext(), "찾지 못하였습니다", Toast.LENGTH_LONG).show();
-        }
-        Snackbar.make(this.getWindow().getDecorView(),selectedItem.getBarcode(),Snackbar.LENGTH_LONG)
-                .setAction("add to history", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if(userHistoryRef!=null){
-                            String key;
-                            key = UUID.randomUUID().toString();
-                            selectedItem.setKey(key);
-                            userHistoryRef.child(key).setValue(selectedItem);
+
+            Snackbar.make(this.getWindow().getDecorView(), selectedItem.getBarcode(), Snackbar.LENGTH_LONG)
+                    .setAction("add to history", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (userHistoryRef != null) {
+                                String key;
+                                key = UUID.randomUUID().toString();
+                                selectedItem.setKey(key);
+                                userHistoryRef.child(key).setValue(selectedItem);
+                            }
                         }
-                    }
-                }).show();
+                    }).show();*/
+        }
     }
 }

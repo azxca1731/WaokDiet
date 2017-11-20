@@ -23,6 +23,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 import org.androidtown.dietapp.DTO.FoodItem;
 import org.androidtown.dietapp.R;
@@ -39,7 +41,8 @@ public class ItemAddActivity extends AppCompatActivity {
     private EditText editTextFat;
     private Button buttonSubmit;
     private String uuid;
-
+    private String barcode;
+    private Button buttonBarcode;
 
     //image & firebase storage  start
     private ImageView imagePrev;
@@ -56,7 +59,7 @@ public class ItemAddActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_add);
 
-        //findid start
+        //find id start
         editTextName=(EditText)findViewById(R.id.editTextName);
         editTextCategory=(EditText)findViewById(R.id.editTextCategory);
         editTextCalorie=(EditText)findViewById(R.id.editTextCalorie);
@@ -67,8 +70,10 @@ public class ItemAddActivity extends AppCompatActivity {
 
         buttonChoose=(Button) findViewById(R.id.buttonChoose);
         buttonUpload=(Button) findViewById(R.id.buttonUpload);
+        buttonBarcode=(Button) findViewById(R.id.buttonBarcode);
         imagePrev=(ImageView)findViewById(R.id.imageViewPrev);
         uploadCheck=false;
+        barcode="";
         //find id end
 
         //database & uuid init start
@@ -76,6 +81,12 @@ public class ItemAddActivity extends AppCompatActivity {
         mFoodRef= FirebaseDatabase.getInstance().getReference().child("food").child(uuid);
         //init end
 
+        buttonBarcode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new IntentIntegrator(ItemAddActivity.this).initiateScan();
+            }
+        });
 
         buttonChoose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,7 +122,9 @@ public class ItemAddActivity extends AppCompatActivity {
                 int carb=Integer.parseInt(editTextCarb.getText().toString());
                 int protein=Integer.parseInt(editTextProtein.getText().toString());
                 int fat=Integer.parseInt(editTextFat.getText().toString());
-                mFoodRef.setValue(new FoodItem(uuid,category,name,calorie,carb,protein,fat));
+                FoodItem insultfoodItem=new FoodItem(uuid,category,name,calorie,carb,protein,fat);
+                insultfoodItem.setBarcode(barcode);
+                mFoodRef.setValue(insultfoodItem);
                 finish();
             }
         });
@@ -122,6 +135,11 @@ public class ItemAddActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         //request코드가 0이고 OK를 선택했고 data에 뭔가가 들어 있다면
+        if (requestCode == IntentIntegrator.REQUEST_CODE) {
+            IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+            barcode = result.getContents();
+        }
+
         if(requestCode == 0 && resultCode == RESULT_OK){
             filePath = data.getData();
             Log.d("TAG", "uri:" + String.valueOf(filePath));
@@ -182,5 +200,6 @@ public class ItemAddActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "파일을 먼저 선택하세요.", Toast.LENGTH_SHORT).show();
         }
     }
+
 
 }
