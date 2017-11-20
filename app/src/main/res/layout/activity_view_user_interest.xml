@@ -19,6 +19,7 @@
         android:layout_marginBottom="4dp"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
+        android:background="@drawable/back"
         app:layout_constraintBottom_toTopOf="@+id/text_in_viewUser_interest"
         app:layout_constraintEnd_toStartOf="@+id/interest_list"
         app:layout_constraintHorizontal_bias="0.421"
@@ -26,6 +27,80 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.541">
+
+        <ImageView
+            android:id="@+id/image_in_interest"
+            android:layout_width="168dp"
+            android:layout_height="140dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:gravity="center"
+            android:id="@+id/Rank_Name"
+            android:layout_width="168dp"
+            android:layout_height="55dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/image_in_interest" />
+
+        <TextView
+            android:gravity="center"
+            android:id="@+id/Rank_cal"
+            android:layout_width="168dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Rank_Name" />
+
+        <TextView
+            android:gravity="center"
+            android:id="@+id/Rank_carbo"
+            android:layout_width="168dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Rank_cal" />
+
+        <TextView
+            android:gravity="center"
+            android:id="@+id/Rank_protein"
+            android:layout_width="168dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Rank_carbo" />
+
+        <TextView
+            android:gravity="center"
+            android:id="@+id/Rank_fat"
+            android:layout_width="168dp"
+            android:layout_height="20dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Rank_protein"
+            app:layout_constraintVertical_bias="0.703" />
 
     </android.support.constraint.ConstraintLayout>
 

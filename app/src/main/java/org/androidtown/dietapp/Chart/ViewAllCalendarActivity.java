@@ -45,7 +45,8 @@ public class ViewAllCalendarActivity extends android.support.v4.app.Fragment{
     TextView textView;
 
     // 데이터 리스트들
-   List<FoodItem> datas = new ArrayList<>();
+    List<FoodItem> datas = new ArrayList<>();
+    int over, under;
     int sum_of_calorie[];
 
     //파이어베이스관련
@@ -55,8 +56,6 @@ public class ViewAllCalendarActivity extends android.support.v4.app.Fragment{
     DatabaseReference userRef;
     DatabaseReference RootRef;
 
-    Bundle bundle;
-
     // 유저칼로리, 날짜
     int user_calorie;
     int dates;
@@ -64,8 +63,6 @@ public class ViewAllCalendarActivity extends android.support.v4.app.Fragment{
     // 프래그먼트 구조상 분리될때 컨텍스트를 null로 반환해서 여러 에러가 생김;
     // 이를 해결하기 위해 onAttach에서 액티비티와 연결
     private Activity activity;
-
-    TextView testtext;
 
     @Override
     public void onAttach(Context context) {
@@ -92,6 +89,8 @@ public class ViewAllCalendarActivity extends android.support.v4.app.Fragment{
 
         get_datas_and_makeChart();
 
+
+
         return layoutGraphView;
     }
 
@@ -99,7 +98,7 @@ public class ViewAllCalendarActivity extends android.support.v4.app.Fragment{
         historyRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                int j=0;
+                int j=0; set_o_u_zero();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     int i=0; datas.clear();
                     for(DataSnapshot snapshot2 : snapshot.getChildren()){
@@ -115,6 +114,7 @@ public class ViewAllCalendarActivity extends android.support.v4.app.Fragment{
                     }else j++;
                     setDates(getDates()+1);
                 }
+
                 userRef.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -122,6 +122,11 @@ public class ViewAllCalendarActivity extends android.support.v4.app.Fragment{
                         int u_cal = dataSnapshot.getValue(int.class);
                         setUser_calorie(u_cal);
                         setLineGraph();
+                        for(int i=0; i<getDates(); i++){
+                            if(getSum_of_calorie(i)>getUser_calorie() + getUser_calorie()%10) over++;
+                            else if(getSum_of_calorie(i)<getUser_calorie() - getUser_calorie()%10) under++;
+                        }
+                        theAdvise();
                     }
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
@@ -199,11 +204,28 @@ public class ViewAllCalendarActivity extends android.support.v4.app.Fragment{
     private void setSum_of_calorie(int index, int value){
         sum_of_calorie[index] = value;
     }
+    private void set_o_u_zero(){ this.over = 0; this.under = 0;}
 
     //set drawing graph
     private void setLineGraph() {
         LineGraphVO vo = makeLineGraphAllSetting();
 
         GraphView.addView(new LineGraphView(activity, vo));
+    }
+
+    public void theAdvise(){
+        if(getDates()/2 < over){
+            textView.setText(" 당신의 권장섭취량을 너무 많이 초과해서 먹었습니다. \n 당신의 하루 권장섭취량을 생각하고 식단을 조절해주세요. ");
+        }else if(getDates()/2 < under) {
+            textView.setText(" 당신의 권장섭취량을 너무 많이 미달해서 먹었습니다. \n 당신의 하루 권장섭취량을 생각하고 식단을 조절해주세요. ");
+        }else if(getDates()/2 < over+under){
+            textView.setText(" 하루 권장섭취량을 어기는 날이 반절 이상이나 됩니다. \n 표를 보고 반성해 주세요. ");
+        }else if(getDates()/3 < over+under){
+            textView.setText(" 당신은 여태 1/3 이상은 과식하거나 소식하셨습니다. \n 조금만 더 노력해주세요. ");
+        }else if(getDates()/4 < over+under){
+            textView.setText(" 잘하고 계시지만, 여전히 25%가량은 조절에 실패하셨습니다. \n 조금만 더 노력해주세요. ");
+        }else{
+            textView.setText(" 대체로 잘 조절하셨네요! ");
+        }
     }
 }

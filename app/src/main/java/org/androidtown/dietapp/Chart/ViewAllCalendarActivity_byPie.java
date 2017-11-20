@@ -114,17 +114,17 @@ public class ViewAllCalendarActivity_byPie extends android.support.v4.app.Fragme
         float rat_fat = ( (float)getFat()/ (float)sum)*100;
         float rat_protein = ( (float)getProtein()/ (float)sum)*100;
         if(rat_carbo>=45){
-            textView.setText("too many 탄수화물");
+            textView.setText("탄수화물을 너무 많이 섭취하고 있습니다!");
         }else if(rat_protein>=60){
-            textView.setText("too many 단백질");
+            textView.setText("단백질을 너무 많이 섭취하고 있습니다!");
         }else if(rat_fat>=35){
-            textView.setText("too many 지방");
+            textView.setText("지방을 너무 많이 섭취하고 있습니다!");
         }else if(rat_protein<40){
-            textView.setText("지방과 탄수화물을 너무 많이 먹고 있습니다! 단백질이 먹어달라고 울고있어요.");
+            textView.setText("단백질의 섭취량이 너무 낮습니다.");
         }else if(rat_fat<15){
-            textView.setText("아무리 지방이 안좋아보여도 그렇게 드시면 안됩니다.");
+            textView.setText("지방의 섭취량이 너무 낮습니다.");
         }else if(rat_carbo<25) {
-            textView.setText("밀가루음식이나 흰쌀밥등이 아니라면 탄수화물은 식단의 30%는 먹는것이 좋습니다.");
+            textView.setText("탄수화물의 섭취량이 너무 낮습니다.");
         }else textView.setText("적당히 균형잡힌 식단이군요.");
     }
     // drawing circle graph
