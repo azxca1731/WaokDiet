@@ -3,12 +3,16 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://C:\Users\azxca\Documents\RealDiet_vol3\RealDietApp_vol3.iml" filepath="C:\Users\azxca\Documents\RealDiet_vol3\RealDietApp_vol3.iml" />
+<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/RealDietApp_vol4.iml" filepath="$PROJECT_DIR$/RealDietApp_vol4.iml" />
       <module fileurl="file://D:\AndroidProjects\RealDietApp_vol4\RealDiet_vol3.iml" filepath="D:\AndroidProjects\RealDietApp_vol4\RealDiet_vol3.iml" />
+=======
+>>>>>>> 3d0fea832b134ff3e269a7ade450cee72a42d6db
       <module fileurl="file://D:\AndroidProjects\RealDietApp_vol3\RealDiet_vol3.iml" filepath="D:\AndroidProjects\RealDietApp_vol3\RealDiet_vol3.iml" />
       <module fileurl="file://C:\RealDiet_vol3_ver5\RealDiet_vol3.iml" filepath="C:\RealDiet_vol3_ver5\RealDiet_vol3.iml" />
       <module fileurl="file://D:\AndroidProjects\RealDietApp_vol3\RealDiet_vol3_ver4.iml" filepath="D:\AndroidProjects\RealDietApp_vol3\RealDiet_vol3_ver4.iml" />
       <module fileurl="file://C:\Users\azxca\Documents\RealDiet_vol3\RealDiet_vol3_ver5.iml" filepath="C:\Users\azxca\Documents\RealDiet_vol3\RealDiet_vol3_ver5.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Waok.iml" filepath="$PROJECT_DIR$/Waok.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://D:\AndroidProjects\RealDietApp_vol4\app\app.iml" filepath="D:\AndroidProjects\RealDietApp_vol4\app\app.iml" />
       <module fileurl="file://C:\RealDiet_vol3_ver5\app\app.iml" filepath="C:\RealDiet_vol3_ver5\app\app.iml" />

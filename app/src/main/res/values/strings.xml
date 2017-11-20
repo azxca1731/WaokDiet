@@ -92,4 +92,7 @@
     <string name="female">Female</string>
     <string name="Male">Male</string>
     <string name="AgreeP">정보를 제공하는것에 대하여 동의합니다.</string>
+    <string name="kakao_app_key">b9108987bce20dc0309ae264019a2e00</string>
+    <string name="kakao_scheme">kakaob9108987bce20dc0309ae264019a2e00</string>
+    <string name="kakaolink_host">kakaolink</string>
 </resources>

@@ -40,9 +40,11 @@
 
     </LinearLayout>
 
-    <Space
+    <Button
+        android:id="@+id/buttonBarcode"
         android:layout_width="match_parent"
-        android:layout_height="30dp" />
+        android:layout_height="wrap_content"
+        android:text="BarcodeScan" />
 
     <TextView
         android:id="@+id/textViewName"
@@ -54,7 +56,7 @@
 
     <EditText
         android:id="@+id/editTextName"
-        android:layout_width="360dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#FFFFFF"
         android:ems="10"
@@ -70,7 +72,7 @@
 
     <EditText
         android:id="@+id/editTextCategory"
-        android:layout_width="360dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#FFFFFF"
         android:ems="10"
@@ -86,7 +88,7 @@
 
     <EditText
         android:id="@+id/editTextCalorie"
-        android:layout_width="360dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#FFFFFF"
         android:ems="10"
@@ -102,7 +104,7 @@
 
     <EditText
         android:id="@+id/editTextCarb"
-        android:layout_width="360dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#FFFFFF"
         android:ems="10"
@@ -118,7 +120,7 @@
 
     <EditText
         android:id="@+id/editTextProtein"
-        android:layout_width="360dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#FFFFFF"
         android:ems="10"
@@ -134,15 +136,11 @@
 
     <EditText
         android:id="@+id/editTextFat"
-        android:layout_width="360dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#FFFFFF"
         android:ems="10"
         android:inputType="textPersonName" />
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="80dp" />
 
     <Button
         android:id="@+id/buttonSubmit"

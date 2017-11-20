@@ -24,11 +24,11 @@
         tools:replace="android:icon">
         <meta-data
             android:name="com.kakao.sdk.AppKey"
-            android:value="b9108987bce20dc0309ae264019a2e00"/>
+            android:value="@string/kakao_app_key"/>
+
         <activity android:name=".Main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -42,7 +42,16 @@
         <activity android:name=".Auth.UserInfoActivity" />
         <activity android:name=".Menu.MenuActivity" />
         <activity android:name=".Menu.ItemAddActivity" />
-        <activity android:name=".Chart.ViewFriendActivity"/>
+        <activity android:name=".Chart.ViewFriendActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="@string/kakao_scheme"
+                    android:host="@string/kakaolink_host"/>
+            </intent-filter>
+        </activity>
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login" />
