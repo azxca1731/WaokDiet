@@ -27,16 +27,16 @@ public class FriendItem implements Comparable<FriendItem>{
     {
         return uid;
     }
-    public void setUid(String uid)
+    public FriendItem setUid(String uid)
     {
-        this.uid=uid;
+        this.uid=uid; return this;
     }
 
     public String getName() {
         return name;
     }
-    public void setName(String name) {
-        this.name = name;
+    public FriendItem setName(String name) {
+        this.name = name;return this;
     }
 
 
