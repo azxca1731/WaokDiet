@@ -42,17 +42,19 @@ import java.util.Locale;
 
 
 public class MainActivity extends AppCompatActivity {
-
+    //JUST TAG :)
     private static final String TAG = "!!!!!!!!!!MAIN!!!!!!!!";
+
     //날짜 관련
     private long now;
     private SimpleDateFormat dateFormat;
     private Date date;
     private String dateStr;
+    //날짜 끝
 
     //프로그레스바 관련
     private DatabaseReference basicCalRef;
-    int todayCal;
+    private int todayCal;
     private int basicCal;
     private int progress;
     //프로그레스바 끝
@@ -78,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
     //기타 변수
     public static Context mainContext;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,26 +107,26 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager lim = new LinearLayoutManager(this);
         lim.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(lim);
-        //리사이클러뷰 끝\
+        adapter = new HistoryAdapter(historyList);
+        recyclerView.setAdapter(adapter);
+        updateHistoryList();
+        adapter.setHistoryRef(myHistoryRef);
+        //리사이클러뷰 끝
 
         //데이터 베이스 시작
         if(user!=mAuth.getCurrentUser())initDatabase();
         //데이터 베이스 끝
 
+        //바텀 네비게이션 바
         bottomNav = (BottomNavigationView)findViewById(R.id.bottom_nav);
         BottomNavigationViewHelper.removeShiftMode(bottomNav);
-
+        //바텀 네비게이션 바
 
         calorie_pbar=(ProgressBar)findViewById(R.id.pbar_calorie);
         percentage_view=(TextView)findViewById(R.id.view_percentage);
-
-        adapter = new HistoryAdapter(historyList);
-        recyclerView.setAdapter(adapter);
-        updateHistoryList();
         progress=0;
         setProgress();
 
-        adapter.setHistoryRef(myHistoryRef);
         bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -240,10 +243,10 @@ public class MainActivity extends AppCompatActivity {
                 getDate();
                 initDatabase();
                 adapter.setHistoryRef(myHistoryRef);
+                updateHistoryList();
                 setProgress();
             }
         }
-
         super.onPostResume();
     }
 
