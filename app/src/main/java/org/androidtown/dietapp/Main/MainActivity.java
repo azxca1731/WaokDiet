@@ -6,6 +6,8 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.internal.BottomNavigationItemView;
+import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -31,6 +33,7 @@ import org.androidtown.dietapp.DTO.FoodItem;
 import org.androidtown.dietapp.Menu.MenuActivity;
 import org.androidtown.dietapp.R;
 
+import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -79,8 +82,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getDate();
 
+        getDate();
 
         FirebaseAuth mAuth= FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser(); //위로뺌;
@@ -94,8 +97,6 @@ public class MainActivity extends AppCompatActivity {
 
         mainContext=this;
 
-
-
         //리사이클러뷰 시작
         historyList=new ArrayList<>();
         recyclerView=(RecyclerView)findViewById(R.id.user_list);
@@ -105,12 +106,14 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(lim);
         //리사이클러뷰 끝\
 
-
         //데이터 베이스 시작
         if(user!=mAuth.getCurrentUser())initDatabase();
         //데이터 베이스 끝
 
         bottomNav = (BottomNavigationView)findViewById(R.id.bottom_nav);
+        BottomNavigationViewHelper.removeShiftMode(bottomNav);
+
+
         calorie_pbar=(ProgressBar)findViewById(R.id.pbar_calorie);
         percentage_view=(TextView)findViewById(R.id.view_percentage);
 
@@ -127,7 +130,6 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getItemId())
                 {
                     case R.id.action_menu:
-
                         Intent menuIntent = new Intent(MainActivity.this,MenuActivity.class);
                         menuIntent.putExtra("dateStr",dateStr);
                         startActivity(menuIntent);
@@ -180,7 +182,6 @@ public class MainActivity extends AppCompatActivity {
         calorie_pbar.setMax(100);
         progress = todayCal*100;
         progress = progress/basicCal;
-
 
         calorie_pbar.setProgress(progress);
         percentage_view.setText(progress + "%");
@@ -239,11 +240,11 @@ public class MainActivity extends AppCompatActivity {
                 getDate();
                 initDatabase();
                 adapter.setHistoryRef(myHistoryRef);
-                updateHistoryList();
                 setProgress();
             }
         }
 
         super.onPostResume();
     }
+
 }
