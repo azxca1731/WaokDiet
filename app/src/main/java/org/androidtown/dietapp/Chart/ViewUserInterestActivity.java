@@ -55,6 +55,8 @@ public class ViewUserInterestActivity extends android.support.v4.app.Fragment{
     private TextView rank_fat;
     private TextView rank_protein;
 
+    //
+    private int carbo, protein, fat;
 
     //파이어베이스
     private StorageReference storageReference;
@@ -131,7 +133,7 @@ public class ViewUserInterestActivity extends android.support.v4.app.Fragment{
         myHistoryRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                interestList.clear();
+                interestList.clear(); set_zero();
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                     for(DataSnapshot snapshot2 : snapshot.getChildren()) {
                         FoodItem foodItem = snapshot2.getValue(FoodItem.class);
@@ -149,9 +151,15 @@ public class ViewUserInterestActivity extends android.support.v4.app.Fragment{
                 quickSort(interestList, 0, interestList.size()-1);
 
                 while(interestList.size()>5)  interestList.remove(interestList.size()-1);
+                for(int i=0; i<5; i++){
+                    carbo = carbo + interestList.get(i).getCarbohydrate();
+                    protein = protein + interestList.get(i).getProtein();
+                    fat = fat + interestList.get(i).getFat();
+                }
 
                 set_rank_food();
                 adapter.notifyDataSetChanged();
+                advise();
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -188,8 +196,29 @@ public class ViewUserInterestActivity extends android.support.v4.app.Fragment{
         rank_protein.setText("단백질 : "+ interestList.get(adapter.get_number()).getProtein()+ "g");
         rank_fat.setText("지방 : "+ interestList.get(adapter.get_number()).getFat() + "g");
     }
+
+    private void advise(){
+        int sum = carbo + fat + protein;
+        float rat_carbo =( (float)carbo/ (float)sum)*100;
+        float rat_fat = ( (float)fat/ (float)sum)*100;
+        float rat_protein = ( (float)protein/ (float)sum)*100;
+        if(rat_carbo>=45){
+            textView.setText("대부분 고탄수화물 음식들을 드시고 계십니다. \n 탄수화물의 비율을 낮춰주세요.");
+        }else if(rat_protein>=60){
+            textView.setText("근육을 키우는게 아니시라면 단백질의 함량이 더 적은 \n 음식을 섭취하는것을 권해드립니다.");
+        }else if(rat_fat>=35){
+            textView.setText("고지방의 음식의 섭취가 너무 잦습니다. \n 현재보다 지방 섭취량을 줄이실 필요가 있습니다.");
+        }else if(rat_protein<40){
+            textView.setText("단백질의 함량이 적은 음식을 너무 많이 드시고 계십니다.");
+        }else if(rat_fat<15){
+            textView.setText("지방의 함량이 적은 음식을 너무 많이 드시고 계십니다..");
+        }else if(rat_carbo<25) {
+            textView.setText("탄수화물의 함량이 적은 음식을 너무 많이 드시고 계십니다.");
+        }else textView.setText("균형잡힌 식단을 선호하시는 군요!");
+    }
+
     // quick sort
-    public static int partition(List<FoodItem> L, int left, int right) {
+    private static int partition(List<FoodItem> L, int left, int right) {
         int pivot = L.get((left + right) / 2).getFrequency();
 
         while (left < right) {
@@ -207,7 +236,7 @@ public class ViewUserInterestActivity extends android.support.v4.app.Fragment{
         }
         return left;
     }
-    public static void quickSort(List<FoodItem> L, int left, int right) {
+    private static void quickSort(List<FoodItem> L, int left, int right) {
 
         if (left < right) {
             int pivotNewIndex = partition(L, left, right);
@@ -215,5 +244,9 @@ public class ViewUserInterestActivity extends android.support.v4.app.Fragment{
             quickSort(L, pivotNewIndex + 1, right);
         }
 
+    }
+
+    private void set_zero(){
+        this.carbo = 0; this.protein = 0; this.fat = 0;
     }
 }
