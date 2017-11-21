@@ -6,6 +6,8 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.internal.BottomNavigationItemView;
+import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -31,6 +33,7 @@ import org.androidtown.dietapp.DTO.FoodItem;
 import org.androidtown.dietapp.Menu.MenuActivity;
 import org.androidtown.dietapp.R;
 
+import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -39,17 +42,19 @@ import java.util.Locale;
 
 
 public class MainActivity extends AppCompatActivity {
-
+    //JUST TAG :)
     private static final String TAG = "!!!!!!!!!!MAIN!!!!!!!!";
+
     //날짜 관련
     private long now;
     private SimpleDateFormat dateFormat;
     private Date date;
     private String dateStr;
+    //날짜 끝
 
     //프로그레스바 관련
     private DatabaseReference basicCalRef;
-    int todayCal;
+    private int todayCal;
     private int basicCal;
     private int progress;
     //프로그레스바 끝
@@ -75,12 +80,13 @@ public class MainActivity extends AppCompatActivity {
 
     //기타 변수
     public static Context mainContext;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getDate();
 
+        getDate();
 
         FirebaseAuth mAuth= FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser(); //위로뺌;
@@ -94,8 +100,6 @@ public class MainActivity extends AppCompatActivity {
 
         mainContext=this;
 
-
-
         //리사이클러뷰 시작
         historyList=new ArrayList<>();
         recyclerView=(RecyclerView)findViewById(R.id.user_list);
@@ -103,31 +107,32 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager lim = new LinearLayoutManager(this);
         lim.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(lim);
-        //리사이클러뷰 끝\
-
+        adapter = new HistoryAdapter(historyList);
+        recyclerView.setAdapter(adapter);
+        updateHistoryList();
+        adapter.setHistoryRef(myHistoryRef);
+        //리사이클러뷰 끝
 
         //데이터 베이스 시작
         if(user!=mAuth.getCurrentUser())initDatabase();
         //데이터 베이스 끝
 
+        //바텀 네비게이션 바
         bottomNav = (BottomNavigationView)findViewById(R.id.bottom_nav);
+        BottomNavigationViewHelper.removeShiftMode(bottomNav);
+        //바텀 네비게이션 바
+
         calorie_pbar=(ProgressBar)findViewById(R.id.pbar_calorie);
         percentage_view=(TextView)findViewById(R.id.view_percentage);
-
-        adapter = new HistoryAdapter(historyList);
-        recyclerView.setAdapter(adapter);
-        updateHistoryList();
         progress=0;
         setProgress();
 
-        adapter.setHistoryRef(myHistoryRef);
         bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId())
                 {
                     case R.id.action_menu:
-
                         Intent menuIntent = new Intent(MainActivity.this,MenuActivity.class);
                         menuIntent.putExtra("dateStr",dateStr);
                         startActivity(menuIntent);
@@ -180,7 +185,6 @@ public class MainActivity extends AppCompatActivity {
         calorie_pbar.setMax(100);
         progress = todayCal*100;
         progress = progress/basicCal;
-
 
         calorie_pbar.setProgress(progress);
         percentage_view.setText(progress + "%");
@@ -243,7 +247,7 @@ public class MainActivity extends AppCompatActivity {
                 setProgress();
             }
         }
-
         super.onPostResume();
     }
+
 }

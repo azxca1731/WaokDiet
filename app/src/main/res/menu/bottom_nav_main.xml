@@ -9,27 +9,27 @@
         android:enabled="true"
         android:icon="@drawable/ic_menu"
         android:title="Menu"
-        app:showAsAction="ifRoom"></item>
+        app:showAsAction="always|withText"></item>
 
     <item
         android:id="@+id/action_userInfo"
         android:enabled="true"
         android:icon="@drawable/ic_userinfo"
         android:title="User Info"
-        app:showAsAction="ifRoom"></item>
+        app:showAsAction="withText"></item>
 
     <item
         android:id="@+id/action_chart"
         android:enabled="true"
         android:icon="@drawable/ic_chart"
         android:title="Chart"
-        app:showAsAction="ifRoom"></item>
+        app:showAsAction="always|withText"></item>
 
     <item
         android:id="@+id/action_friend"
         android:enabled="true"
         android:icon="@drawable/ic_person_white"
         android:title="Friend"
-        app:showAsAction="ifRoom"></item>
+        app:showAsAction="always|withText"></item>
 
 </menu>
