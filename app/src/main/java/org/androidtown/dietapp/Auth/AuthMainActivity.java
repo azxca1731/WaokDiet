@@ -109,7 +109,7 @@ public class AuthMainActivity extends AppCompatActivity implements View.OnClickL
                 signIn();
                 break;
             case R.id.emailButton:
-                startActivity(new Intent(AuthMainActivity.this,EmailPasswordActivity.class));
+                startActivity(new Intent(AuthMainActivity.this,EmailPasswordDialogue.class));
                 break;
 
         }

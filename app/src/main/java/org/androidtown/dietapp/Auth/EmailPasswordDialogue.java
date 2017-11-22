@@ -37,13 +37,8 @@ import com.google.firebase.auth.FirebaseUser;
 
 import org.androidtown.dietapp.R;
 
-public class EmailPasswordActivity extends Activity implements
+public class EmailPasswordDialogue extends Activity implements
         View.OnClickListener {
-    /*
-    TODO:
-        디자인이 구림 나중에 업그레이드 해야할듯
-     */
-
 
     private static final String TAG = "EmailPassword";
 
@@ -111,7 +106,7 @@ public class EmailPasswordActivity extends Activity implements
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(EmailPasswordActivity.this, "Authentication failed.",
+                            Toast.makeText(EmailPasswordDialogue.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
@@ -142,13 +137,13 @@ public class EmailPasswordActivity extends Activity implements
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
-                            Intent UserInfoIntent=new Intent(EmailPasswordActivity.this,UserInfoActivity.class);
+                            Intent UserInfoIntent=new Intent(EmailPasswordDialogue.this,UserInfoActivity.class);
                             startActivity(UserInfoIntent);
                             finish();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(EmailPasswordActivity.this, "Authentication failed.",
+                            Toast.makeText(EmailPasswordDialogue.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
@@ -184,12 +179,12 @@ public class EmailPasswordActivity extends Activity implements
                         findViewById(R.id.verify_email_button).setEnabled(true);
 
                         if (task.isSuccessful()) {
-                            Toast.makeText(EmailPasswordActivity.this,
+                            Toast.makeText(EmailPasswordDialogue.this,
                                     "Verification email sent to " + user.getEmail(),
                                     Toast.LENGTH_SHORT).show();
                         } else {
                             Log.e(TAG, "sendEmailVerification", task.getException());
-                            Toast.makeText(EmailPasswordActivity.this,
+                            Toast.makeText(EmailPasswordDialogue.this,
                                     "Failed to send verification email.",
                                     Toast.LENGTH_SHORT).show();
                         }
