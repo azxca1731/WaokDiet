@@ -5,11 +5,15 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.0'
+        classpath 'com.android.tools.build:gradle:3.0.1'
         classpath 'com.github.dcendents:android-maven-plugin:1.0'
     }
 }
 
 task wrapper(type: Wrapper) {
     gradleVersion = '1.12'
+}
+
+repositories {
+    google()
 }

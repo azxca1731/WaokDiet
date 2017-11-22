@@ -1,7 +1,6 @@
 package org.androidtown.dietapp.Chart;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -43,6 +42,7 @@ public class ViewFriendActivity extends AppCompatActivity{
     private List<FriendItem> friendList;
     private FriendAdapter adapter;
 
+    private static final String TAG="FRIENDACTIVITY";
     ///카카오 링크 시작
     private final Context context=this;
 
@@ -60,14 +60,15 @@ public class ViewFriendActivity extends AppCompatActivity{
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Intent intent = getIntent();
-        if(intent.getExtras()!=null){
-            Log.d("FRIEND","들어가 시발!");
-            Uri uri = intent.getData();
-            String friendUid = uri.getQueryParameter("uid");
-            settingFriend(friendUid);
+        if(getIntent()!=null){
+            Uri uri = getIntent().getData();
+            if(uri!=null){
+                String friendUid = uri.getQueryParameter("uid");
+                Log.d(TAG, "onCreate: ");
+                //settingFriend(friendUid);
+                getNames(friendUid);
+            }
         }
-
 
         //뷰
         setContentView(R.layout.activity_view_friends);
@@ -124,8 +125,10 @@ public class ViewFriendActivity extends AppCompatActivity{
             public void onDataChange(DataSnapshot dataSnapshot) {
                 friendList.clear();
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                   FriendItem friendItem = snapshot.getValue(FriendItem.class);
-                   friendList.add(friendItem);
+                    if(snapshot!=null) {
+                        FriendItem friendItem = snapshot.getValue(FriendItem.class);
+                        friendList.add(friendItem);
+                    }
                 }
                 adapter.notifyDataSetChanged();
             }
@@ -155,17 +158,15 @@ public class ViewFriendActivity extends AppCompatActivity{
         }
     }
 
-    private void settingFriend(String friendUid){
+    private void getNames(final String friendUid){
         DatabaseReference myInfoRef=FirebaseDatabase.getInstance().getReference().child("user").child(uid);
         DatabaseReference myfriendInfoRef=FirebaseDatabase.getInstance().getReference().child("user").child(friendUid);
-        DatabaseReference myfriendRef=FirebaseDatabase.getInstance().getReference().child("friends").child(uid);
-        DatabaseReference myfriendfriendRef=FirebaseDatabase.getInstance().getReference().child("friends").child(friendUid);
-        //내 정보 세팅
-        myInfoRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        myInfoRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 FriendItem myItem=dataSnapshot.getValue(FriendItem.class);
                 myName=myItem.getName();
+                settingMe(friendUid);
             }
 
             @Override
@@ -174,11 +175,12 @@ public class ViewFriendActivity extends AppCompatActivity{
             }
         });
         //친구 정보 세팅
-        myfriendInfoRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        myfriendInfoRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 FriendItem myItem=dataSnapshot.getValue(FriendItem.class);
                 friendName=myItem.getName();
+                settingFriend(friendUid);
             }
 
             @Override
@@ -186,10 +188,31 @@ public class ViewFriendActivity extends AppCompatActivity{
 
             }
         });
+    }
+
+    private void settingFriend(String friendUid){
+
+        DatabaseReference myfriendRef=FirebaseDatabase.getInstance().getReference().child("friends").child(uid).child(friendUid);
+        //내 정보 세팅
+
+        Log.d(TAG, "settingFriend: "+friendName);
+        Log.d(TAG, "settingFriend: "+friendUid);
+        Log.d(TAG, "settingFriend: "+myName);
         //내 친구로 등록
-        myfriendRef.setValue(new FriendItem().setName(friendName).setUid(friendUid));
+        myfriendRef.setValue(new FriendItem(friendUid,friendName));
+
+    }
+
+    private void settingMe(String friendUid){
+
+        DatabaseReference myfriendfriendRef=FirebaseDatabase.getInstance().getReference().child("friends").child(friendUid).child(uid);
+        //내 정보 세팅
+
+        Log.d(TAG, "settingFriend: "+friendName);
+        Log.d(TAG, "settingFriend: "+friendUid);
+        Log.d(TAG, "settingFriend: "+myName);
         //친구 나를 친구로 등록
-        myfriendfriendRef.setValue(new FriendItem().setUid(myName).setUid(friendUid));
+        myfriendfriendRef.setValue(new FriendItem(uid,myName));
     }
 
 }

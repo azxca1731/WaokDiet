@@ -52,9 +52,6 @@
                     android:host="@string/kakaolink_host"/>
             </intent-filter>
         </activity>
-        <activity
-            android:name=".LoginActivity"
-            android:label="@string/title_activity_login" />
         <activity android:name=".Auth.AuthMainActivity"></activity>
         <activity android:name=".qr.CaptureActivityAnyOrientation"
             android:screenOrientation="fullSensor"
