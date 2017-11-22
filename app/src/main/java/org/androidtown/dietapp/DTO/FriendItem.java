@@ -13,7 +13,8 @@ public class FriendItem implements Comparable<FriendItem>{
     public FriendItem() {
     }
 
-    public FriendItem(String name){
+    public FriendItem(String uid, String name) {
+        this.uid = uid;
         this.name = name;
     }
 
