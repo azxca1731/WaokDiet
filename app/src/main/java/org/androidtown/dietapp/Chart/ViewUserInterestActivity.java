@@ -58,12 +58,13 @@ public class ViewUserInterestActivity extends android.support.v4.app.Fragment{
     //
     private int carbo, protein, fat;
 
+    Bundle bundle;
+
     //파이어베이스
     private StorageReference storageReference;
     private FirebaseDatabase database;
     private DatabaseReference myHistoryRef;
-    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    String uid = user.getUid();
+    String uid ;
 
     // 리사이클러뷰 관련
     private RecyclerView recyclerView;
@@ -110,6 +111,8 @@ public class ViewUserInterestActivity extends android.support.v4.app.Fragment{
         adapter = new InterestAdapter(interestList);
         recyclerView.setAdapter(adapter);
 
+        bundle = getArguments();
+        uid = bundle.getString("uid");
 
         // 파이어베이스
         storageReference= FirebaseStorage.getInstance().getReference();

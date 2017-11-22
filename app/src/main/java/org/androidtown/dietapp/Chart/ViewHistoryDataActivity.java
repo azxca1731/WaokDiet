@@ -1,5 +1,6 @@
 package org.androidtown.dietapp.Chart;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -31,25 +32,35 @@ public class ViewHistoryDataActivity extends AppCompatActivity {
     ViewAllCalendarActivity_byPie view_pie;
     ViewUserInterestActivity view_interst;
 
+    Bundle bundle = new Bundle(1);
+    Intent intent;
+
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    String uid = user.getUid();
-    DatabaseReference myHistoryRef = database.getReference().child("userHistory").child(uid);
+
+    DatabaseReference myHistoryRef;
 
     // bottomnav
     private BottomNavigationView bottomNav;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        if(myHistoryRef != null){
+        super.onCreate(savedInstanceState);
 
+        intent = getIntent();
+        String uid = intent.getExtras().getString("uid");
+
+        myHistoryRef = database.getReference().child("userHistory").child(uid);
+
+        if(myHistoryRef != null){
         }
         else{
             Toast.makeText(getApplicationContext(), "음식을 섭취한 내역이 없습니다.", Toast.LENGTH_SHORT).show();
             finish();
         }
-        super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_view_history_of_user);
+
+        bundle.putString("uid", uid);
 
         // 프래그먼트들
         view_line = new ViewAllCalendarActivity();
@@ -57,10 +68,8 @@ public class ViewHistoryDataActivity extends AppCompatActivity {
         view_interst = new ViewUserInterestActivity();
 
         // 초기화면
+        view_line.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().replace(R.id.container_of_historyview, view_line).commit();
-
-
-
 
         // bottomnavi 설정
         bottomNav = (BottomNavigationView)findViewById(R.id.bottom_nav_in_chartview);
@@ -71,12 +80,15 @@ public class ViewHistoryDataActivity extends AppCompatActivity {
                 switch (item.getItemId())
                 {
                     case R.id.action_viewCalorie:
+                        view_line.setArguments(bundle);
                         getSupportFragmentManager().beginTransaction().replace(R.id.container_of_historyview, view_line).commit();
                         break;
                     case R.id.action_viewPie:
+                        view_pie.setArguments(bundle);
                         getSupportFragmentManager().beginTransaction().replace(R.id.container_of_historyview, view_pie).commit();
                         break;
                     case R.id.action_viewInterest:
+                        view_interst.setArguments(bundle);
                         getSupportFragmentManager().beginTransaction().replace(R.id.container_of_historyview, view_interst).commit();
                         break;
                 }

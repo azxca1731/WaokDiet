@@ -25,7 +25,9 @@ import java.util.List;
 public class ChartActivity extends Activity {
     private BottomNavigationView bottomNav;
     Intent AuthIntent;
+    Intent intent;
 
+    String uid = "";
 
     @Override
 
@@ -34,6 +36,8 @@ public class ChartActivity extends Activity {
         setContentView(R.layout.activity_chart);
 
 
+        intent = getIntent();
+        uid = intent.getExtras().getString("uid");
 
         CalendarView calendar = (CalendarView) findViewById(R.id.calendar);
 
@@ -41,12 +45,12 @@ public class ChartActivity extends Activity {
         calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
 
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-                Intent intent = new Intent(ChartActivity.this, ViewCalendarActivity.class);
-                intent.putExtra("Year", year);
-                intent.putExtra("Month", month);
-                intent.putExtra("Day", dayOfMonth);
-
-                startActivity(intent);
+                Intent calendarIntent = new Intent(ChartActivity.this, ViewCalendarActivity.class);
+                calendarIntent.putExtra("Year", year);
+                calendarIntent.putExtra("Month", month);
+                calendarIntent.putExtra("Day", dayOfMonth);
+                calendarIntent.putExtra("uid", uid);
+                startActivity(calendarIntent);
             }
         });
 
@@ -61,14 +65,17 @@ public class ChartActivity extends Activity {
                 {
                     case R.id.action_to_all_view:
                         AuthIntent = new Intent(ChartActivity.this, ViewHistoryDataActivity.class);
+                        AuthIntent.putExtra("uid", uid);
                         startActivity(AuthIntent);
                         break;
                     case R.id.action_to_all_view_left:
                         AuthIntent = new Intent(ChartActivity.this, ViewHistoryDataActivity.class);
+                        AuthIntent.putExtra("uid", uid);
                         startActivity(AuthIntent);
                         break;
                     case R.id.action_to_all_view_right:
                         AuthIntent = new Intent(ChartActivity.this, ViewHistoryDataActivity.class);
+                        AuthIntent.putExtra("uid", uid);
                         startActivity(AuthIntent);
                         break;
                 }

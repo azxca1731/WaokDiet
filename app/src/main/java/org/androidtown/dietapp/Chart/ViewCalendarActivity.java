@@ -74,14 +74,16 @@ public class ViewCalendarActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        // 레퍼런스설정
-        DatabaseReference userHistoryRef = mDatabase.child("userHistory").child(user.getUid());
 
         // 인텐트로 넘어온 날짜값을 받아 문자열로 제작
         Intent intent = getIntent();
         int year = intent.getExtras().getInt("Year");
         int month = intent.getExtras().getInt("Month")+1;
         int day = intent.getExtras().getInt("Day");
+        String uid = intent.getExtras().getString("uid");
+
+        // 레퍼런스설정
+        DatabaseReference userHistoryRef = mDatabase.child("userHistory").child(uid);
 
         if(month<10 && day<10){
             date = String.valueOf(year)+"0"+String.valueOf(month)+"0"+String.valueOf(day);
@@ -188,9 +190,6 @@ public class ViewCalendarActivity extends AppCompatActivity {
 
         List<CircleGraph> arrGraph 	= new ArrayList<CircleGraph>();
 
-
-        //GRAPH SETTING
-        ViewAllCalendarActivity_byPie users = new ViewAllCalendarActivity_byPie();
 
         arrGraph.add(new CircleGraph("단백질", Color.GREEN, getCarbo()));
         arrGraph.add(new CircleGraph("탄수화물", Color.RED, getCarbo()));

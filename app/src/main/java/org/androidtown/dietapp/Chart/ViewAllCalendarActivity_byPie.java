@@ -45,9 +45,10 @@ public class ViewAllCalendarActivity_byPie extends android.support.v4.app.Fragme
     // 리스트
     ArrayList<FoodItem> foods = new ArrayList<FoodItem>();
 
+    Bundle bundle;
+
     // 파이어베이스관련
-    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    String uid = user.getUid();
+    String uid ;
 
     //탄단지
     int carbo,protein,fat;
@@ -70,6 +71,8 @@ public class ViewAllCalendarActivity_byPie extends android.support.v4.app.Fragme
         GraphView = (ViewGroup) layoutGraphView.findViewById((R.id.view_all_calendar_bypie));
         textView = (TextView)layoutGraphView.findViewById(R.id.text_int_viewCalendar_by_pie);
 
+        bundle = getArguments();
+        uid = bundle.getString("uid");
 
         DatabaseReference RootRef = FirebaseDatabase.getInstance().getReference();
         DatabaseReference userRef = RootRef.child("user").child(uid).child("basicCalorie");
