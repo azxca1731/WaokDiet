@@ -6,18 +6,13 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import org.androidtown.dietapp.R;
-import org.w3c.dom.Text;
 
 
 /**
@@ -28,9 +23,9 @@ import org.w3c.dom.Text;
 public class ViewHistoryDataActivity extends AppCompatActivity {
 
     // 이동할 화면들
-    ViewAllCalendarActivity view_line;
-    ViewAllCalendarActivity_byPie view_pie;
-    ViewUserInterestActivity view_interst;
+    ViewAllCalendarFragment view_line;
+    ViewAllCalendarFragment_byPie view_pie;
+    ViewUserInterestFragment view_interst;
 
     Bundle bundle = new Bundle(1);
     Intent intent;
@@ -63,9 +58,9 @@ public class ViewHistoryDataActivity extends AppCompatActivity {
         bundle.putString("uid", uid);
 
         // 프래그먼트들
-        view_line = new ViewAllCalendarActivity();
-        view_pie = new ViewAllCalendarActivity_byPie();
-        view_interst = new ViewUserInterestActivity();
+        view_line = new ViewAllCalendarFragment();
+        view_pie = new ViewAllCalendarFragment_byPie();
+        view_interst = new ViewUserInterestFragment();
 
         // 초기화면
         view_line.setArguments(bundle);

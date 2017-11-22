@@ -8,14 +8,11 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.ThemedSpinnerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -37,7 +34,7 @@ import java.util.List;
  * Created by zidru on 2017-09-27.
  */
 
-public class ViewAllCalendarActivity_byPie extends android.support.v4.app.Fragment{
+public class ViewAllCalendarFragment_byPie extends android.support.v4.app.Fragment{
     // 뷰
     private ViewGroup layoutGraphView;
     private ViewGroup GraphView;
@@ -161,7 +158,7 @@ public class ViewAllCalendarActivity_byPie extends android.support.v4.app.Fragme
 
 
         //GRAPH SETTING
-        ViewAllCalendarActivity_byPie users = new ViewAllCalendarActivity_byPie();
+        ViewAllCalendarFragment_byPie users = new ViewAllCalendarFragment_byPie();
 
         arrGraph.add(new CircleGraph("단백질", Color.GREEN, getCarbo()));
         arrGraph.add(new CircleGraph("탄수화물", Color.RED, getCarbo()));

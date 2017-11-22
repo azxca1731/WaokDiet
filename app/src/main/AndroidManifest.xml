@@ -42,7 +42,7 @@
         <activity android:name=".Auth.UserInfoActivity" />
         <activity android:name=".Menu.MenuActivity" />
         <activity android:name=".Menu.ItemAddActivity" />
-        <activity android:name=".Chart.ViewFriendActivity">
+        <activity android:name=".Friend.ViewFriendActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />

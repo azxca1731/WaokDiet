@@ -1,4 +1,4 @@
-package org.androidtown.dietapp.Chart;
+package org.androidtown.dietapp.Friend;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,26 +7,21 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import org.androidtown.dietapp.DTO.FoodItem;
+import org.androidtown.dietapp.Chart.ChartActivity;
 import org.androidtown.dietapp.DTO.FriendItem;
-import org.androidtown.dietapp.DTO.UsersItem;
-import org.androidtown.dietapp.Main.MainActivity;
 import org.androidtown.dietapp.R;
 
 import java.util.List;
 
-// ViewUserInterestActivity 리사이클려뷰 어댑터
+// ViewUserInterestFragment 리사이클려뷰 어댑터
 public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendViewHolder>{
 
     private List<FriendItem> friendList;

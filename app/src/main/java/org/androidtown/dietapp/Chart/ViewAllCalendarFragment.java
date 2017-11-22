@@ -8,14 +8,11 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -38,7 +35,7 @@ import java.util.List;
  */
 
 // 전체데이터를 꺾은선 그래프로 표현
-public class ViewAllCalendarActivity extends android.support.v4.app.Fragment{
+public class ViewAllCalendarFragment extends android.support.v4.app.Fragment{
     // 뷰
     private ViewGroup layoutGraphView;
     private ViewGroup GraphView;
@@ -163,7 +160,7 @@ public class ViewAllCalendarActivity extends android.support.v4.app.Fragment{
 
         //GRAPH SETTING
 
-        ViewAllCalendarActivity users = new ViewAllCalendarActivity();
+        ViewAllCalendarFragment users = new ViewAllCalendarFragment();
         String[] legendArr = new String[getDates()];
         int[] graph1 = new int[getDates()];
         int[] graph2 = new int[getDates()];
