@@ -1,6 +1,7 @@
 package org.androidtown.dietapp.Chart;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -85,6 +86,7 @@ public class ViewFriendActivity extends AppCompatActivity{
         adapter = new FriendAdapter(friendList);
         recyclerView.setAdapter(adapter);
 
+
         // 파이어베이스
         database = FirebaseDatabase.getInstance();
         DatabaseReference RootRef = FirebaseDatabase.getInstance().getReference();
@@ -92,7 +94,6 @@ public class ViewFriendActivity extends AppCompatActivity{
 
         // 어댑터의 레퍼런스설정
         adapter.setHistoryRef(userRef);
-
 
         bottomNav = (BottomNavigationView)findViewById(R.id.bottom_nav_in_friendview);
 

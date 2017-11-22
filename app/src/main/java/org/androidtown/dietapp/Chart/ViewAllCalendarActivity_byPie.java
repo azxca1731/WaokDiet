@@ -45,9 +45,10 @@ public class ViewAllCalendarActivity_byPie extends android.support.v4.app.Fragme
     // 리스트
     ArrayList<FoodItem> foods = new ArrayList<FoodItem>();
 
+    Bundle bundle;
+
     // 파이어베이스관련
-    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    String uid = user.getUid();
+    String uid ;
 
     //탄단지
     int carbo,protein,fat;
@@ -70,6 +71,8 @@ public class ViewAllCalendarActivity_byPie extends android.support.v4.app.Fragme
         GraphView = (ViewGroup) layoutGraphView.findViewById((R.id.view_all_calendar_bypie));
         textView = (TextView)layoutGraphView.findViewById(R.id.text_int_viewCalendar_by_pie);
 
+        bundle = getArguments();
+        uid = bundle.getString("uid");
 
         DatabaseReference RootRef = FirebaseDatabase.getInstance().getReference();
         DatabaseReference userRef = RootRef.child("user").child(uid).child("basicCalorie");
@@ -108,12 +111,15 @@ public class ViewAllCalendarActivity_byPie extends android.support.v4.app.Fragme
 
 
     public void theAdvise(){
-
         int sum = getCarbo() + getProtein() + getFat();
         float rat_carbo =( (float)getCarbo()/ (float)sum)*100;
         float rat_fat = ( (float)getFat()/ (float)sum)*100;
         float rat_protein = ( (float)getProtein()/ (float)sum)*100;
-        if(rat_carbo>=45){
+        if(foods.size() ==0){
+            textView.setText("먹은 음식이 없으시네요.");
+        }else if(foods.size()<5){
+            textView.setText("표본이 적지만 비율은 다음과 같습니다.");
+        } else if(rat_carbo>=45){
             textView.setText("탄수화물을 너무 많이 섭취하고 있습니다!");
         }else if(rat_protein>=60){
             textView.setText("단백질을 너무 많이 섭취하고 있습니다!");

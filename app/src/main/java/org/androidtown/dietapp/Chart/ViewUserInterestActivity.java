@@ -58,12 +58,13 @@ public class ViewUserInterestActivity extends android.support.v4.app.Fragment{
     //
     private int carbo, protein, fat;
 
+    Bundle bundle;
+
     //파이어베이스
     private StorageReference storageReference;
     private FirebaseDatabase database;
     private DatabaseReference myHistoryRef;
-    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    String uid = user.getUid();
+    String uid ;
 
     // 리사이클러뷰 관련
     private RecyclerView recyclerView;
@@ -110,6 +111,8 @@ public class ViewUserInterestActivity extends android.support.v4.app.Fragment{
         adapter = new InterestAdapter(interestList);
         recyclerView.setAdapter(adapter);
 
+        bundle = getArguments();
+        uid = bundle.getString("uid");
 
         // 파이어베이스
         storageReference= FirebaseStorage.getInstance().getReference();
@@ -128,6 +131,7 @@ public class ViewUserInterestActivity extends android.support.v4.app.Fragment{
     // 먹은음식 top5 추리고 정렬. 리스트뷰에 표현.
     private void updateHistoryList() {
         if (myHistoryRef == null) {
+
             return;
         }
         myHistoryRef.addValueEventListener(new ValueEventListener() {
@@ -151,7 +155,7 @@ public class ViewUserInterestActivity extends android.support.v4.app.Fragment{
                 quickSort(interestList, 0, interestList.size()-1);
 
                 while(interestList.size()>5)  interestList.remove(interestList.size()-1);
-                for(int i=0; i<5; i++){
+                for(int i=0; i<interestList.size(); i++){
                     carbo = carbo + interestList.get(i).getCarbohydrate();
                     protein = protein + interestList.get(i).getProtein();
                     fat = fat + interestList.get(i).getFat();
@@ -189,32 +193,45 @@ public class ViewUserInterestActivity extends android.support.v4.app.Fragment{
 
 
     private void set_rank_food(){
-        Glide.with(activity.getApplicationContext()).using(new FirebaseImageLoader()).load(storageReference.child("foodImage/" +  interestList.get(adapter.get_number()).getUid() + ".png")).into(image);
-        rank_name.setText("이름 : "+ interestList.get(adapter.get_number()).getName());
-        rank_carbo.setText("탄수화물 : "+ interestList.get(adapter.get_number()).getCarbohydrate()+ "g");
-        rank_cal.setText("칼로리 : "+ interestList.get(adapter.get_number()).getCalorie()+ "kcal");
-        rank_protein.setText("단백질 : "+ interestList.get(adapter.get_number()).getProtein()+ "g");
-        rank_fat.setText("지방 : "+ interestList.get(adapter.get_number()).getFat() + "g");
+        if(interestList.size()!=0){
+            if(activity.isFinishing()) {return;}
+            Glide.with(activity).using(new FirebaseImageLoader()).load(storageReference.child("foodImage/" + interestList.get(adapter.get_number()).getUid() + ".png")).into(image);
+            rank_name.setText("이름 : " + interestList.get(adapter.get_number()).getName());
+            rank_carbo.setText("탄수화물 : " + interestList.get(adapter.get_number()).getCarbohydrate() + "g");
+            rank_cal.setText("칼로리 : " + interestList.get(adapter.get_number()).getCalorie() + "kcal");
+            rank_protein.setText("단백질 : " + interestList.get(adapter.get_number()).getProtein() + "g");
+            rank_fat.setText("지방 : " + interestList.get(adapter.get_number()).getFat() + "g");
+        }else{
+            return;
+        }
+
     }
 
     private void advise(){
-        int sum = carbo + fat + protein;
-        float rat_carbo =( (float)carbo/ (float)sum)*100;
-        float rat_fat = ( (float)fat/ (float)sum)*100;
-        float rat_protein = ( (float)protein/ (float)sum)*100;
-        if(rat_carbo>=45){
-            textView.setText("대부분 고탄수화물 음식들을 드시고 계십니다. \n 탄수화물의 비율을 낮춰주세요.");
-        }else if(rat_protein>=60){
-            textView.setText("근육을 키우는게 아니시라면 단백질의 함량이 더 적은 \n 음식을 섭취하는것을 권해드립니다.");
-        }else if(rat_fat>=35){
-            textView.setText("고지방의 음식의 섭취가 너무 잦습니다. \n 현재보다 지방 섭취량을 줄이실 필요가 있습니다.");
-        }else if(rat_protein<40){
-            textView.setText("단백질의 함량이 적은 음식을 너무 많이 드시고 계십니다.");
-        }else if(rat_fat<15){
-            textView.setText("지방의 함량이 적은 음식을 너무 많이 드시고 계십니다..");
-        }else if(rat_carbo<25) {
-            textView.setText("탄수화물의 함량이 적은 음식을 너무 많이 드시고 계십니다.");
-        }else textView.setText("균형잡힌 식단을 선호하시는 군요!");
+        if(interestList.size()!=0) {
+            int sum = carbo + fat + protein;
+            float rat_carbo = ((float) carbo / (float) sum) * 100;
+            float rat_fat = ((float) fat / (float) sum) * 100;
+            float rat_protein = ((float) protein / (float) sum) * 100;
+            if(interestList.size()<5){
+                textView.setText("표본이 적지만 다음과 같네요.");
+            } else if (rat_carbo >= 45) {
+                textView.setText("대부분 고탄수화물 음식들을 드시고 계십니다. \n 탄수화물의 비율을 낮춰주세요.");
+            } else if (rat_protein >= 60) {
+                textView.setText("근육을 키우는게 아니시라면 단백질의 함량이 더 적은 \n 음식을 섭취하는것을 권해드립니다.");
+            } else if (rat_fat >= 35) {
+                textView.setText("고지방의 음식의 섭취가 너무 잦습니다. \n 현재보다 지방 섭취량을 줄이실 필요가 있습니다.");
+            } else if (rat_protein < 40) {
+                textView.setText("단백질의 함량이 적은 음식을 너무 많이 드시고 계십니다.");
+            } else if (rat_fat < 15) {
+                textView.setText("지방의 함량이 적은 음식을 너무 많이 드시고 계십니다..");
+            } else if (rat_carbo < 25) {
+                textView.setText("탄수화물의 함량이 적은 음식을 너무 많이 드시고 계십니다.");
+            } else textView.setText("균형잡힌 식단을 선호하시는 군요!");
+        }
+        else{
+            textView.setText("먹은 음식이 없습니다!");
+        }
     }
 
     // quick sort
@@ -249,4 +266,5 @@ public class ViewUserInterestActivity extends android.support.v4.app.Fragment{
     private void set_zero(){
         this.carbo = 0; this.protein = 0; this.fat = 0;
     }
+
 }

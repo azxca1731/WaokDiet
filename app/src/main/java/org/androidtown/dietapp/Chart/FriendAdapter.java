@@ -1,6 +1,7 @@
 package org.androidtown.dietapp.Chart;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -20,6 +21,7 @@ import com.google.firebase.storage.StorageReference;
 import org.androidtown.dietapp.DTO.FoodItem;
 import org.androidtown.dietapp.DTO.FriendItem;
 import org.androidtown.dietapp.DTO.UsersItem;
+import org.androidtown.dietapp.Main.MainActivity;
 import org.androidtown.dietapp.R;
 
 import java.util.List;
@@ -78,11 +80,13 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendView
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Snackbar.make(v,textName.getText()+" 선택",Snackbar.LENGTH_LONG).setAction("delete", new View.OnClickListener() {
+                    Snackbar.make(v,textName.getText()+" 선택",Snackbar.LENGTH_LONG).setAction("친구의 차트보기", new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             if(historyRef!=null){
-                                historyRef.child(key).removeValue();
+                                Intent intent = new Intent( context, ChartActivity.class);
+                                intent.putExtra("uid", key);
+                                context.startActivity(intent);
                             }
                         }
                     }).show();

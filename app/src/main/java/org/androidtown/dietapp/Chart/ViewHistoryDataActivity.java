@@ -1,5 +1,6 @@
 package org.androidtown.dietapp.Chart;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,6 +9,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.androidtown.dietapp.R;
 import org.w3c.dom.Text;
@@ -25,13 +32,35 @@ public class ViewHistoryDataActivity extends AppCompatActivity {
     ViewAllCalendarActivity_byPie view_pie;
     ViewUserInterestActivity view_interst;
 
+    Bundle bundle = new Bundle(1);
+    Intent intent;
+
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+    DatabaseReference myHistoryRef;
+
     // bottomnav
     private BottomNavigationView bottomNav;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        intent = getIntent();
+        String uid = intent.getExtras().getString("uid");
+
+        myHistoryRef = database.getReference().child("userHistory").child(uid);
+
+        if(myHistoryRef != null){
+        }
+        else{
+            Toast.makeText(getApplicationContext(), "음식을 섭취한 내역이 없습니다.", Toast.LENGTH_SHORT).show();
+            finish();
+        }
+
         setContentView(R.layout.activity_view_history_of_user);
+
+        bundle.putString("uid", uid);
 
         // 프래그먼트들
         view_line = new ViewAllCalendarActivity();
@@ -39,6 +68,7 @@ public class ViewHistoryDataActivity extends AppCompatActivity {
         view_interst = new ViewUserInterestActivity();
 
         // 초기화면
+        view_line.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().replace(R.id.container_of_historyview, view_line).commit();
 
         // bottomnavi 설정
@@ -50,12 +80,15 @@ public class ViewHistoryDataActivity extends AppCompatActivity {
                 switch (item.getItemId())
                 {
                     case R.id.action_viewCalorie:
+                        view_line.setArguments(bundle);
                         getSupportFragmentManager().beginTransaction().replace(R.id.container_of_historyview, view_line).commit();
                         break;
                     case R.id.action_viewPie:
+                        view_pie.setArguments(bundle);
                         getSupportFragmentManager().beginTransaction().replace(R.id.container_of_historyview, view_pie).commit();
                         break;
                     case R.id.action_viewInterest:
+                        view_interst.setArguments(bundle);
                         getSupportFragmentManager().beginTransaction().replace(R.id.container_of_historyview, view_interst).commit();
                         break;
                 }

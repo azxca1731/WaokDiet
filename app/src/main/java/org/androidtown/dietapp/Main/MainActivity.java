@@ -144,6 +144,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.action_chart:
                         Intent chartIntent = new Intent(MainActivity.this,ChartActivity.class);
+                        chartIntent.putExtra("uid", user.getUid());
                         startActivity(chartIntent);
                         break;
                     case R.id.action_friend:

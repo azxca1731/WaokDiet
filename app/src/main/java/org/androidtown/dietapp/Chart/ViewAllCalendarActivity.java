@@ -49,9 +49,10 @@ public class ViewAllCalendarActivity extends android.support.v4.app.Fragment{
     int over, under;
     int sum_of_calorie[];
 
+    Bundle bundle;
+
     //파이어베이스관련
-    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    String uid = user.getUid();
+    String uid ;
     DatabaseReference historyRef;
     DatabaseReference userRef;
     DatabaseReference RootRef;
@@ -74,8 +75,11 @@ public class ViewAllCalendarActivity extends android.support.v4.app.Fragment{
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         //초기화
-        dates=0;
-        sum_of_calorie = new int[30];
+        dates=1;
+        sum_of_calorie = new int[31];
+
+        bundle = getArguments();
+        uid = bundle.getString("uid");
 
         //뷰 선언
         layoutGraphView = (ViewGroup) inflater.inflate(R.layout.activity_view_all_calendar, container, false);
@@ -109,7 +113,7 @@ public class ViewAllCalendarActivity extends android.support.v4.app.Fragment{
                         i++;
                     }
                     //30일까지만
-                    if(j>=30) {
+                    if(j>=31) {
                         break;
                     }else j++;
                     setDates(getDates()+1);
@@ -163,9 +167,10 @@ public class ViewAllCalendarActivity extends android.support.v4.app.Fragment{
         String[] legendArr = new String[getDates()];
         int[] graph1 = new int[getDates()];
         int[] graph2 = new int[getDates()];
-        for(int i=0; i<getDates();i++){
-            legendArr[i] = String.valueOf(i+1)+"일차";
-            graph1[i] = sum_of_calorie[i];
+        graph1[0] = 0; legendArr[0] = "0";  graph2[0] = getUser_calorie();
+        for(int i=1; i<getDates();i++){
+            legendArr[i] = String.valueOf(i);
+            graph1[i] = sum_of_calorie[i-1];
             graph2[i] = getUser_calorie();
         }
         List<LineGraph> arrGraph = new ArrayList<LineGraph>();
