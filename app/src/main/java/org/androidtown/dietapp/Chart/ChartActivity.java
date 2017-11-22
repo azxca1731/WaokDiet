@@ -77,4 +77,9 @@ public class ChartActivity extends Activity {
         });
 
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed(); finish();
+    }
 }

@@ -108,12 +108,15 @@ public class ViewAllCalendarActivity_byPie extends android.support.v4.app.Fragme
 
 
     public void theAdvise(){
-
         int sum = getCarbo() + getProtein() + getFat();
         float rat_carbo =( (float)getCarbo()/ (float)sum)*100;
         float rat_fat = ( (float)getFat()/ (float)sum)*100;
         float rat_protein = ( (float)getProtein()/ (float)sum)*100;
-        if(rat_carbo>=45){
+        if(foods.size() ==0){
+            textView.setText("먹은 음식이 없으시네요.");
+        }else if(foods.size()<5){
+            textView.setText("표본이 적지만 비율은 다음과 같습니다.");
+        } else if(rat_carbo>=45){
             textView.setText("탄수화물을 너무 많이 섭취하고 있습니다!");
         }else if(rat_protein>=60){
             textView.setText("단백질을 너무 많이 섭취하고 있습니다!");
