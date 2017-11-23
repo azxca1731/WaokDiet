@@ -209,7 +209,7 @@ public class ViewUserInterestFragment extends android.support.v4.app.Fragment{
             float rat_carbo = ((float) carbo / (float) sum) * 100;
             float rat_fat = ((float) fat / (float) sum) * 100;
             float rat_protein = ((float) protein / (float) sum) * 100;
-            if(interestList.size()<5){
+            if(get_frequencies()<5){
                 textView.setText("표본이 적지만 다음과 같네요.");
             } else if (rat_carbo >= 45) {
                 textView.setText("대부분 고탄수화물 음식들을 드시고 계십니다. \n 탄수화물의 비율을 낮춰주세요.");
@@ -228,6 +228,14 @@ public class ViewUserInterestFragment extends android.support.v4.app.Fragment{
         else{
             textView.setText("먹은 음식이 없습니다!");
         }
+    }
+
+    private int get_frequencies(){
+        int sum=0;
+        for(int i=0; i<interestList.size(); i++){
+            sum = sum + interestList.get(i).getFrequency();
+        }
+        return sum;
     }
 
     // quick sort

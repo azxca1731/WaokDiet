@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,7 +29,6 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendView
     private Context context;
     private StorageReference storageReference;
     private DatabaseReference historyRef;
-    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
 
     public FriendAdapter(List<FriendItem> friendList) {
@@ -56,6 +56,16 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendView
 
         holder.textName.setText(friendItem.getName());
         holder.key = friendItem.getUid();
+
+        Button button = (Button) holder.itemView.findViewById(R.id.button1_on_friend);
+        button.setOnClickListener(
+                new Button.OnClickListener(){
+                    public void onClick(View v){
+                        Intent intent = new Intent( context, ChartActivity.class);
+                        intent.putExtra("uid", holder.key);
+                        context.startActivity(intent);
+                    }
+                });
     }
 
     @Override
@@ -75,14 +85,13 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendView
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Snackbar.make(v,textName.getText()+" 선택",Snackbar.LENGTH_LONG).setAction("친구의 차트보기", new View.OnClickListener() {
+                    Snackbar.make(v,textName.getText()+" 선택",Snackbar.LENGTH_LONG).setAction("친구삭제", new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             if(historyRef!=null){
-                                Intent intent = new Intent( context, ChartActivity.class);
-                                intent.putExtra("uid", key);
-                                context.startActivity(intent);
-                            }
+                                if(historyRef!=null){
+                                    historyRef.child(key).removeValue();
+                                }}
                         }
                     }).show();
                 }

@@ -216,7 +216,11 @@ public class ViewAllCalendarFragment extends android.support.v4.app.Fragment{
     }
 
     public void theAdvise(){
-        if(getDates()/2 < over){
+        if(datas.size() ==0){
+            textView.setText("먹은 음식이 없으시네요.");
+        }else if(datas.size()<5){
+            textView.setText("표본이 적지만 비율은 다음과 같습니다.");
+        } else if(getDates()/2 < over){
             textView.setText(" 당신의 권장섭취량을 너무 많이 초과해서 먹었습니다. \n 당신의 하루 권장섭취량을 생각하고 식단을 조절해주세요. ");
         }else if(getDates()/2 < under) {
             textView.setText(" 당신의 권장섭취량을 너무 많이 미달해서 먹었습니다. \n 당신의 하루 권장섭취량을 생각하고 식단을 조절해주세요. ");

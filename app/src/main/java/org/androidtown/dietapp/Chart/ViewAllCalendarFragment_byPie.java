@@ -81,9 +81,8 @@ public class ViewAllCalendarFragment_byPie extends android.support.v4.app.Fragme
                 setCarbo(0);
                 setProtein(0);
                 setFat(0);
-                int j=0;
+                int j=0; foods.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    foods.clear();
                     for(DataSnapshot snapshot_food : snapshot.getChildren()){
                         FoodItem data = snapshot_food.getValue(FoodItem.class);
                         foods.add(data);
@@ -92,7 +91,7 @@ public class ViewAllCalendarFragment_byPie extends android.support.v4.app.Fragme
                         setFat(getFat() + foods.get(j).getFat());
                         j++;
                     }
-                    j=0;
+
                 }
                 setCircleGraph();
                 theAdvise();
@@ -160,7 +159,7 @@ public class ViewAllCalendarFragment_byPie extends android.support.v4.app.Fragme
         //GRAPH SETTING
         ViewAllCalendarFragment_byPie users = new ViewAllCalendarFragment_byPie();
 
-        arrGraph.add(new CircleGraph("단백질", Color.GREEN, getCarbo()));
+        arrGraph.add(new CircleGraph("단백질", Color.GREEN, getProtein()));
         arrGraph.add(new CircleGraph("탄수화물", Color.RED, getCarbo()));
         arrGraph.add(new CircleGraph("지방", Color.BLUE, getFat()));
 

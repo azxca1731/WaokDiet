@@ -101,11 +101,13 @@ public class ViewFriendActivity extends AppCompatActivity{
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action_friend_left:
+                        addMyfriend();
                         break;
                     case R.id.action_add_friend:
                         addMyfriend();
                         break;
                     case R.id.action_friend_right:
+                        addMyfriend();
                         break;
                 }
                 return true;

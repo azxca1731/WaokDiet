@@ -27,6 +27,7 @@ public class ViewHistoryDataActivity extends AppCompatActivity {
     ViewAllCalendarFragment_byPie view_pie;
     ViewUserInterestFragment view_interst;
 
+    // 번들, 인텐트
     Bundle bundle = new Bundle(1);
     Intent intent;
 
@@ -41,8 +42,10 @@ public class ViewHistoryDataActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // 인텐트받기
         intent = getIntent();
         String uid = intent.getExtras().getString("uid");
+        bundle.putString("uid", uid);
 
         myHistoryRef = database.getReference().child("userHistory").child(uid);
 
@@ -55,15 +58,15 @@ public class ViewHistoryDataActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_view_history_of_user);
 
-        bundle.putString("uid", uid);
-
         // 프래그먼트들
         view_line = new ViewAllCalendarFragment();
         view_pie = new ViewAllCalendarFragment_byPie();
         view_interst = new ViewUserInterestFragment();
 
-        // 초기화면
+        // 초기화면, 번들삽입
         view_line.setArguments(bundle);
+        view_interst.setArguments(bundle);
+        view_pie.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().replace(R.id.container_of_historyview, view_line).commit();
 
         // bottomnavi 설정
@@ -75,15 +78,12 @@ public class ViewHistoryDataActivity extends AppCompatActivity {
                 switch (item.getItemId())
                 {
                     case R.id.action_viewCalorie:
-                        view_line.setArguments(bundle);
                         getSupportFragmentManager().beginTransaction().replace(R.id.container_of_historyview, view_line).commit();
                         break;
                     case R.id.action_viewPie:
-                        view_pie.setArguments(bundle);
                         getSupportFragmentManager().beginTransaction().replace(R.id.container_of_historyview, view_pie).commit();
                         break;
                     case R.id.action_viewInterest:
-                        view_interst.setArguments(bundle);
                         getSupportFragmentManager().beginTransaction().replace(R.id.container_of_historyview, view_interst).commit();
                         break;
                 }
