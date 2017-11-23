@@ -9,7 +9,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import org.androidtown.dietapp.DTO.FoodItem;
 import org.androidtown.dietapp.R;
@@ -30,6 +34,8 @@ public class CustomDialog extends Dialog {
     private TextView foodProtein;
     private TextView foodFat;
     private String key;
+    private Context context;
+    private StorageReference storageReference;
 
     /*
     private TextView foodName;
@@ -44,8 +50,10 @@ public class CustomDialog extends Dialog {
 
     public CustomDialog(@NonNull Context context, FoodItem food, DatabaseReference historyRef) {
         super(context);
+        this.context=context;
         this.food = food;
         this.historyRef = historyRef;
+        storageReference = FirebaseStorage.getInstance().getReference();
     }
 
     @Override
@@ -82,14 +90,21 @@ public class CustomDialog extends Dialog {
         };
         add.setOnClickListener(clickListener);
         cancel.setOnClickListener(clickListener);
+
+        init();
     }
 
     public void init(){
-
-    }
-
-    public void setImg(){
-
+      foodName.setText(food.getName());
+      foodCal.setText("칼로리: " + String.valueOf(food.getCalorie())+" Kcal");
+      foodProtein.setText("단백질: " + String.valueOf(food.getProtein())+ " g");
+      foodCarbo.setText("탄수화물: " + String.valueOf(food.getCarbohydrate())+" g");
+      foodFat.setText("지방: " + String.valueOf(food.getFat()) +" g");
+      Glide.with(context)
+              .using(new FirebaseImageLoader())
+              .load(storageReference.child("foodImage/" + food.getUid() + ".png"))
+              .override(145,75)
+              .into(img);
     }
 
 }

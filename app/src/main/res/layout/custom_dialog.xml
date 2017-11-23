@@ -27,8 +27,9 @@
                 android:textAlignment="center"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
-                android:textSize="20dp"
-                android:text="FoodName"/>
+                android:textSize="17dp"
+                android:text="FoodName"
+                android:textColor="@color/colorPrimary"/>
         </LinearLayout>
 
         <LinearLayout
