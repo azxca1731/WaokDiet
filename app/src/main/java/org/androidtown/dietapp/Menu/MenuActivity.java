@@ -2,7 +2,6 @@ package org.androidtown.dietapp.Menu;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,7 +11,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -28,7 +26,6 @@ import org.androidtown.dietapp.DTO.FoodItem;
 import org.androidtown.dietapp.R;
 
 import java.util.ArrayList;
-import java.util.UUID;
 
 public class MenuActivity extends AppCompatActivity implements View.OnClickListener,TextWatcher{
     private FirebaseDatabase database;
@@ -42,6 +39,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
     private FoodAdapter adapter;
     private FirebaseUser user;
     private String dateStr;
+    private static final String TAG = "MENUACTIVITY";
     public ArrayList<FoodItem> foodItemList;
     public ArrayList<FoodItem> barcodeItemList;
 
@@ -146,11 +144,11 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
             IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
             // result.getFormatName() : 바코드 종류
             // result.getContents() : 바코드 값
-            if (result.getContents() == null) {
-                return;
+            if (result.getContents() != null) {
+                Log.d(TAG, "onActivityResult: "+result.getContents()+"한글이 있어야 잘보임");
             }
 
-            final FoodItem selectedItem = datastructure.binarySearch(result.getContents());
+            /*final FoodItem selectedItem = datastructure.binarySearch(result.getContents());
             Log.d("TAG", "onActivityResult: "+selectedItem+"한국말");
             if (selectedItem == null) {
                 Toast.makeText(getApplicationContext(), "찾지 못하였습니다", Toast.LENGTH_LONG).show();
@@ -168,7 +166,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
                                 userHistoryRef.child(key).setValue(selectedItem);
                             }
                         }
-                    }).show();
+                    }).show();*/
         }
     }
 

@@ -32,13 +32,19 @@ import org.androidtown.dietapp.R;
 import java.io.IOException;
 import java.util.UUID;
 
-public class ItemAddActivity extends AppCompatActivity {
+public class ItemAddActivity extends AppCompatActivity implements View.OnClickListener {
     private EditText editTextName;
     private EditText editTextCategory;
     private EditText editTextCalorie;
     private EditText editTextCarb;
     private EditText editTextProtein;
     private EditText editTextFat;
+    private EditText editTextSugar;
+    private EditText editTextNatrium;
+    private EditText editTextCholestreol;
+    private EditText editTextSaturateFat;
+    private EditText editTextTransFat;
+
     private Button buttonSubmit;
     private String uuid;
     private String barcode;
@@ -59,6 +65,10 @@ public class ItemAddActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_add);
 
+        init();
+    }
+
+    private void init(){
         //find id start
         editTextName=(EditText)findViewById(R.id.editTextName);
         editTextCategory=(EditText)findViewById(R.id.editTextCategory);
@@ -66,69 +76,28 @@ public class ItemAddActivity extends AppCompatActivity {
         editTextCarb=(EditText)findViewById(R.id.editTextCarb);
         editTextProtein=(EditText)findViewById(R.id.editTextProtein);
         editTextFat=(EditText)findViewById(R.id.editTextFat);
+        editTextSugar=(EditText)findViewById(R.id.editTextSugar);
+        editTextNatrium=(EditText)findViewById(R.id.editTextNatrium);
+        editTextCholestreol=(EditText)findViewById(R.id.editTextCholestreol);
+        editTextSaturateFat=(EditText)findViewById(R.id.editTextSaturateFat);
+        editTextTransFat=(EditText)findViewById(R.id.editTextTransFat);
         buttonSubmit=(Button) findViewById(R.id.buttonSubmit);
 
         buttonChoose=(Button) findViewById(R.id.buttonChoose);
         buttonUpload=(Button) findViewById(R.id.buttonUpload);
         buttonBarcode=(Button) findViewById(R.id.buttonBarcode);
         imagePrev=(ImageView)findViewById(R.id.imageViewPrev);
-        uploadCheck=false;
-        barcode="";
         //find id end
+        uploadCheck=false;
+        barcode="0";
 
-        //database & uuid init start
         uuid=UUID.randomUUID().toString();
         mFoodRef= FirebaseDatabase.getInstance().getReference().child("food").child(uuid);
-        //init end
 
-        buttonBarcode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new IntentIntegrator(ItemAddActivity.this).initiateScan();
-            }
-        });
-
-        buttonChoose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //이미지를 선택
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "이미지를 선택하세요."), 0);
-            }
-        });
-
-        buttonUpload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //업로드
-                uploadFile();
-            }
-        });
-
-        //데어터 베이스에 저장
-        buttonSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(uploadCheck==false){
-                    Toast.makeText(ItemAddActivity.this, "사진을 업로드 하세요", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                String name=editTextName.getText().toString();
-                String category=editTextCategory.getText().toString();
-                int calorie=Integer.parseInt(editTextCalorie.getText().toString());
-                int carb=Integer.parseInt(editTextCarb.getText().toString());
-                int protein=Integer.parseInt(editTextProtein.getText().toString());
-                int fat=Integer.parseInt(editTextFat.getText().toString());
-                FoodItem insultfoodItem=new FoodItem(uuid,category,name,calorie,carb,protein,fat);
-                insultfoodItem.setBarcode(barcode);
-                mFoodRef.setValue(insultfoodItem);
-                finish();
-            }
-        });
-        //데이터 베이스에 저장 완료
+        buttonBarcode.setOnClickListener(this);
+        buttonChoose.setOnClickListener(this);
+        buttonUpload.setOnClickListener(this);
+        buttonSubmit.setOnClickListener(this);
     }
 
     @Override
@@ -201,5 +170,52 @@ public class ItemAddActivity extends AppCompatActivity {
         }
     }
 
+    private void submitFood(){
+        if(uploadCheck==false){
+            Toast.makeText(ItemAddActivity.this, "사진을 업로드 하세요", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        String name=editTextName.getText().toString();
+        String category=editTextCategory.getText().toString();
+        int calorie=Integer.parseInt(editTextCalorie.getText().toString());
+        int carb=Integer.parseInt(editTextCarb.getText().toString());
+        int protein=Integer.parseInt(editTextProtein.getText().toString());
+        int fat=Integer.parseInt(editTextFat.getText().toString());
+        int sugar=Integer.parseInt(editTextSugar.getText().toString());
+        int natrium=Integer.parseInt(editTextNatrium.getText().toString());
+        int cholesterol=Integer.parseInt(editTextCholestreol.getText().toString());
+        int saturatedFat=Integer.parseInt(editTextSaturateFat.getText().toString());
+        int transFat=Integer.parseInt(editTextTransFat.getText().toString());
+        FoodItem foodItem=new FoodItem(category,name, calorie, fat, carb, protein, sugar, natrium, cholesterol, saturatedFat, transFat, uuid);
+        foodItem.setBarcode(barcode);
+        mFoodRef.setValue(foodItem);
+        finish();
+    }
 
+    /*
+            IMPLEMENTS METHOD
+     */
+
+    //ONCLICKLISTNER
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.buttonBarcode:
+                new IntentIntegrator(ItemAddActivity.this).initiateScan();
+                break;
+            case R.id.buttonChoose:
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "이미지를 선택하세요."), 0);
+                break;
+            case R.id.buttonUpload:
+                uploadFile();
+                break;
+            case R.id.buttonSubmit:
+                submitFood();
+                break;
+        }
+    }
 }

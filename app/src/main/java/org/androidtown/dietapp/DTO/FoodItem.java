@@ -1,30 +1,31 @@
 package org.androidtown.dietapp.DTO;
 
-import android.support.annotation.NonNull;
-
 /**
  * Created by latitude7275 on 2017-09-14.
  */
 
-public class FoodItem implements Comparable<FoodItem>{
+public class FoodItem{
     private String category;
     private String name;
+    //표준 4개
     private int calorie;
     private int fat;
     private int carbohydrate;
     private int protein;
+    //추가 5개
+    private int sugar;
+    private int natrium;
+    private int cholesterol;
+    private int saturatedFat;
+    private int transFat;
+
     private String uid;
+
     private int frequency;
     private String key;
     private String barcode;
 
-    public String getKey() {
-        return key;
-    }
 
-    public void setKey(String key) {
-        this.key = key;
-    }
 
     public FoodItem() {
         setFrequency(0);
@@ -40,18 +41,27 @@ public class FoodItem implements Comparable<FoodItem>{
         this.protein = protein;
         this.calorie = calorie;
         key="1";
-        barcode="";
+        barcode="0";
+    }
+
+    public FoodItem(String category, String name, int calorie, int fat, int carbohydrate, int protein, int sugar, int natrium, int cholesterol, int saturatedFat, int transFat, String uid) {
+        this.category = category;
+        this.name = name;
+        this.calorie = calorie;
+        this.fat = fat;
+        this.carbohydrate = carbohydrate;
+        this.protein = protein;
+        this.sugar = sugar;
+        this.natrium = natrium;
+        this.cholesterol = cholesterol;
+        this.saturatedFat = saturatedFat;
+        this.transFat = transFat;
+        this.uid = uid;
     }
 
 
-
-    @Override
-    public int compareTo(@NonNull FoodItem o) {
-        return o.getName().compareTo(this.name);
-    }
-
-    //getter setter start
-
+    //getter & setter
+    //TODO:나중에 불필요한 것들 삭제 요망
     public String getCategory() {
         return category;
     }
@@ -64,16 +74,16 @@ public class FoodItem implements Comparable<FoodItem>{
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public int getCalorie() {
         return calorie;
     }
 
     public void setCalorie(int calorie) {
         this.calorie = calorie;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public int getFat() {
@@ -100,21 +110,61 @@ public class FoodItem implements Comparable<FoodItem>{
         this.protein = protein;
     }
 
-    public String getUid()
-    {
+    public int getSugar() {
+        return sugar;
+    }
+
+    public void setSugar(int sugar) {
+        this.sugar = sugar;
+    }
+
+    public int getNatrium() {
+        return natrium;
+    }
+
+    public void setNatrium(int natrium) {
+        this.natrium = natrium;
+    }
+
+    public int getCholesterol() {
+        return cholesterol;
+    }
+
+    public void setCholesterol(int cholesterol) {
+        this.cholesterol = cholesterol;
+    }
+
+    public int getSaturatedFat() {
+        return saturatedFat;
+    }
+
+    public void setSaturatedFat(int saturatedFat) {
+        this.saturatedFat = saturatedFat;
+    }
+
+    public int getTransFat() {
+        return transFat;
+    }
+
+    public void setTransFat(int transFat) {
+        this.transFat = transFat;
+    }
+
+    public String getUid() {
         return uid;
     }
 
-    public void setUid(String uid)
-    {
-        this.uid=uid;
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
-    public void setFrequency(int Frequency){ this.frequency = Frequency; }
+    public int getFrequency() {
+        return frequency;
+    }
 
-    public int getFrequency(){ return frequency; }
-
-    public void plusFrequency(){ setFrequency(getFrequency()+1);}
+    public void setFrequency(int frequency) {
+        this.frequency = frequency;
+    }
 
     public String getBarcode() {
         return barcode;
@@ -124,6 +174,14 @@ public class FoodItem implements Comparable<FoodItem>{
         this.barcode = barcode;
     }
 
-    //getter setter end
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public void plusFrequency(){ setFrequency(getFrequency()+1);}
 
 }
