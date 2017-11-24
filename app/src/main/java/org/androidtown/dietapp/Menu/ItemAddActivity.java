@@ -171,25 +171,31 @@ public class ItemAddActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void submitFood(){
-        if(uploadCheck==false){
+        if(!uploadCheck){
             Toast.makeText(ItemAddActivity.this, "사진을 업로드 하세요", Toast.LENGTH_SHORT).show();
             return;
         }
-        String name=editTextName.getText().toString();
-        String category=editTextCategory.getText().toString();
-        int calorie=Integer.parseInt(editTextCalorie.getText().toString());
-        int carb=Integer.parseInt(editTextCarb.getText().toString());
-        int protein=Integer.parseInt(editTextProtein.getText().toString());
-        int fat=Integer.parseInt(editTextFat.getText().toString());
-        int sugar=Integer.parseInt(editTextSugar.getText().toString());
-        int natrium=Integer.parseInt(editTextNatrium.getText().toString());
-        int cholesterol=Integer.parseInt(editTextCholestreol.getText().toString());
-        int saturatedFat=Integer.parseInt(editTextSaturateFat.getText().toString());
-        int transFat=Integer.parseInt(editTextTransFat.getText().toString());
-        FoodItem foodItem=new FoodItem(category,name, calorie, fat, carb, protein, sugar, natrium, cholesterol, saturatedFat, transFat, uuid);
-        foodItem.setBarcode(barcode);
-        mFoodRef.setValue(foodItem);
-        finish();
+        try {
+            String name=editTextName.getText().toString();
+            String category=editTextCategory.getText().toString();
+            int calorie=Integer.parseInt(editTextCalorie.getText().toString());
+            int carb=Integer.parseInt(editTextCarb.getText().toString());
+            int protein=Integer.parseInt(editTextProtein.getText().toString());
+            int fat=Integer.parseInt(editTextFat.getText().toString());
+            int sugar=Integer.parseInt(editTextSugar.getText().toString());
+            int natrium=Integer.parseInt(editTextNatrium.getText().toString());
+            int cholesterol=Integer.parseInt(editTextCholestreol.getText().toString());
+            int saturatedFat=Integer.parseInt(editTextSaturateFat.getText().toString());
+            int transFat=Integer.parseInt(editTextTransFat.getText().toString());
+            FoodItem foodItem=new FoodItem(category,name, calorie, fat, carb, protein, sugar, natrium, cholesterol, saturatedFat, transFat, uuid);
+            foodItem.setBarcode(barcode);
+            mFoodRef.setValue(foodItem);
+            finish();
+        }catch (Exception e){
+            Toast.makeText(ItemAddActivity.this, "잘못 입력 되었거나 입력 안한 부분이 있습니다.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
     }
 
     /*
