@@ -27,28 +27,33 @@ import java.util.UUID;
 public class CustomDialog extends Dialog {
 
     private View.OnClickListener clickListener;
-    private ImageView img;
+    //음식 정보
     private TextView foodName;
+    private TextView foodCategory;
     private TextView foodCal;
     private TextView foodCarbo;
     private TextView foodProtein;
     private TextView foodFat;
-    private String key;
-    private Context context;
-    private StorageReference storageReference;
-
 
     private TextView foodSugar;
     private TextView foodNatrium;
     private TextView foodCholesterol;
     private TextView foodSaturatedFat;
     private TextView foodTransFat;
+    //음식 정보 끝
 
+    //xml 버튼 이미지
+    private ImageView img;
     private Button add;
     private Button cancel;
-    private FoodItem food;
-    private DatabaseReference historyRef;
+    //버튼 이미지 끝
 
+    //데이터 베이스 관련
+    private Context context;
+    private StorageReference storageReference;
+    private DatabaseReference historyRef;
+    private FoodItem food;
+    //데이터 베이스 끝
     public CustomDialog(@NonNull Context context, FoodItem food, DatabaseReference historyRef) {
         super(context);
         this.context=context;
@@ -63,6 +68,7 @@ public class CustomDialog extends Dialog {
         setContentView(R.layout.custom_dialog);
         img=(ImageView)findViewById(R.id.foodImg);
         foodName=(TextView)findViewById(R.id.foodName);
+        foodCategory=(TextView)findViewById(R.id.foodCategory);
         foodCal=(TextView)findViewById(R.id.foodCal);
         foodCarbo=(TextView)findViewById(R.id.foodCarbohydrate);
         foodProtein=(TextView)findViewById(R.id.foodProtein);
@@ -102,6 +108,7 @@ public class CustomDialog extends Dialog {
 
     public void init(){
       foodName.setText(food.getName());
+      foodCategory.setText(food.getCategory());
       foodCal.setText("칼로리: " + String.valueOf(food.getCalorie())+" Kcal");
       foodProtein.setText("단백질: " + String.valueOf(food.getProtein())+ " g");
       foodCarbo.setText("탄수화물: " + String.valueOf(food.getCarbohydrate())+" g");
