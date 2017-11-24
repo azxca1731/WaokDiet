@@ -2,15 +2,16 @@ package org.androidtown.dietapp.Menu;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -26,6 +27,7 @@ import org.androidtown.dietapp.DTO.FoodItem;
 import org.androidtown.dietapp.R;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class MenuActivity extends AppCompatActivity implements View.OnClickListener,TextWatcher{
     private FirebaseDatabase database;
@@ -42,6 +44,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
     private static final String TAG = "MENUACTIVITY";
     public ArrayList<FoodItem> foodItemList;
     public ArrayList<FoodItem> barcodeItemList;
+    FoodItem selectedItem;
 
 
 
@@ -111,7 +114,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
                     FoodItem foodItem = snapshot.getValue(FoodItem.class);
                     if(foodItem!= null) {
                         foodItemList.add(foodItem);
-                         if(foodItem.getBarcode()!=""){
+                         if(foodItem.getBarcode()!="0"){
                              //바코드가 있는 음식의 경우 받아온다.
                             barcodeItemList.add(foodItem);
                         }
@@ -144,30 +147,40 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
             IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
             // result.getFormatName() : 바코드 종류
             // result.getContents() : 바코드 값
-            if (result.getContents() != null) {
-                Log.d(TAG, "onActivityResult: "+result.getContents()+"한글이 있어야 잘보임");
+            if (result.getContents() == null) {
+                Toast.makeText(getApplicationContext(), "제대로 입력이 되지않았습니다.\n다시 시도해 주세요", Toast.LENGTH_LONG).show();
+                return;
             }
-
-            /*final FoodItem selectedItem = datastructure.binarySearch(result.getContents());
-            Log.d("TAG", "onActivityResult: "+selectedItem+"한국말");
-            if (selectedItem == null) {
-                Toast.makeText(getApplicationContext(), "찾지 못하였습니다", Toast.LENGTH_LONG).show();
-            }
-
-            //스낵바 부분
-            Snackbar.make(this.getWindow().getDecorView(), selectedItem.getBarcode(), Snackbar.LENGTH_LONG)
-                    .setAction("add to history", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if (userHistoryRef != null) {
-                                String key;
-                                key = UUID.randomUUID().toString();
-                                selectedItem.setKey(key);
-                                userHistoryRef.child(key).setValue(selectedItem);
+            String barcode = result.getContents();
+            try {
+                int index= datastructure.binarySearch(barcode);
+                if(index<0){
+                    Toast.makeText(getApplicationContext(), "등록되지 않은 바코드입니다.", Toast.LENGTH_LONG).show();
+                    return;
+                }
+               selectedItem = datastructure.getBarcodeList().get(index);
+                //스낵바 부분
+                Snackbar.make(this.getWindow().getDecorView(), selectedItem.getName(), Snackbar.LENGTH_LONG)
+                        .setAction("add to history", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (userHistoryRef != null) {
+                                    String key;
+                                    key = UUID.randomUUID().toString();
+                                    selectedItem.setKey(key);
+                                    userHistoryRef.child(key).setValue(selectedItem);
+                                    finish();
+                                }
                             }
-                        }
-                    }).show();*/
+                        }).show();
+            } catch (Exception e) {
+                e.getStackTrace();
+                Toast.makeText(getApplicationContext(), "찾지 못하였습니다\n다시 시도해주세요", Toast.LENGTH_LONG).show();
+                return;
+            }
         }
+
+
     }
 
 

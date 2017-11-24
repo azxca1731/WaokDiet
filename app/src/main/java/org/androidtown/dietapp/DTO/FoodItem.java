@@ -1,10 +1,12 @@
 package org.androidtown.dietapp.DTO;
 
+import android.support.annotation.NonNull;
+
 /**
  * Created by latitude7275 on 2017-09-14.
  */
 
-public class FoodItem{
+public class FoodItem implements Comparable<FoodItem>{
     private String category;
     private String name;
     //표준 4개
@@ -25,6 +27,10 @@ public class FoodItem{
     private String key;
     private String barcode;
 
+    @Override
+    public int compareTo(@NonNull FoodItem o) {
+        return this.barcode.compareTo(o.getBarcode());
+    }
 
     public FoodItem() {
         setFrequency(0);

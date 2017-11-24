@@ -4,6 +4,7 @@ import org.androidtown.dietapp.DTO.FoodItem;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 
 /**
@@ -67,9 +68,14 @@ public class DataStructure {
         return searchList;
     }
 
-    public FoodItem binarySearch(String searchedString) {
+    public int binarySearch(String searchedString) {
+        FoodItem wantObject = new FoodItem();
+        wantObject.setBarcode(searchedString);
+        return Collections.binarySearch(barcodeList,wantObject);
+    }
 
-        return null;
+    public ArrayList<FoodItem> getBarcodeList() {
+        return barcodeList;
     }
 }
 
