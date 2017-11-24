@@ -43,6 +43,8 @@ public class FoodItem implements Comparable<FoodItem>{
         barcode="";
     }
 
+
+
     @Override
     public int compareTo(@NonNull FoodItem o) {
         return o.getName().compareTo(this.name);

@@ -2,14 +2,17 @@ package org.androidtown.dietapp.Menu;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -25,8 +28,9 @@ import org.androidtown.dietapp.DTO.FoodItem;
 import org.androidtown.dietapp.R;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
-public class MenuActivity extends AppCompatActivity{
+public class MenuActivity extends AppCompatActivity implements View.OnClickListener,TextWatcher{
     private FirebaseDatabase database;
     private DatabaseReference userHistoryRef;
     private DatabaseReference foodRef;
@@ -42,6 +46,7 @@ public class MenuActivity extends AppCompatActivity{
     public ArrayList<FoodItem> barcodeItemList;
 
 
+
     //자료구조 데모 선언 시작
     private DataStructure datastructure;
     private ArrayList<FoodItem> searchedItemList;
@@ -53,6 +58,11 @@ public class MenuActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
+        init();
+    }
+
+    private void init(){
+        //firebase init
         FirebaseAuth mAuth= FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
 
@@ -60,9 +70,10 @@ public class MenuActivity extends AppCompatActivity{
         database = FirebaseDatabase.getInstance();
         userHistoryRef =database.getReference().child("userHistory").child(user.getUid()).child(dateStr);
         foodRef = database.getReference().child("food");
-
+        //firebase init end
         barcodeItemList= new ArrayList<FoodItem>();
         foodItemList = new ArrayList<FoodItem>();
+
 
         //자료구조 데모 init
         datastructure=DataStructure.getInstance();
@@ -80,51 +91,15 @@ public class MenuActivity extends AppCompatActivity{
         recyclerView.setAdapter(adapter);
         updateFoodList();
 
+        //button
         buttonSearch=(Button)findViewById(R.id.buttonSearch);
         buttonAddMenu=(Button)findViewById(R.id.buttonAddMenu);
         edit=(EditText)findViewById(R.id.edit);
-        buttonAddMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent addIntent = new Intent(MenuActivity.this,ItemAddActivity.class);
-                startActivity(addIntent);
-            }
-        });
-        listener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                switch (v.getId()) {
-                    case R.id.buttonSearch:
-                        new IntentIntegrator(MenuActivity.this).initiateScan();
-                        break;
-                    case R.id.user_list:
-                }
-            }
-        };
-
-
-        buttonSearch.setOnClickListener(listener);
-        edit.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                searchedItemList=datastructure.search(s.toString());
-                adapter.setFoodList(searchedItemList);
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
+        buttonAddMenu.setOnClickListener(this);
+        buttonSearch.setOnClickListener(this);
+        edit.addTextChangedListener(this);
     }
-
 
     private  void updateFoodList(){
         if(foodRef == null){
@@ -138,14 +113,11 @@ public class MenuActivity extends AppCompatActivity{
                     FoodItem foodItem = snapshot.getValue(FoodItem.class);
                     if(foodItem!= null) {
                         foodItemList.add(foodItem);
-
-                        //TODO:
-                        //나중에 음식들 다 리셋하고 일단 속성은 만들어야함
-                        /*
                          if(foodItem.getBarcode()!=""){
+                             //바코드가 있는 음식의 경우 받아온다.
                             barcodeItemList.add(foodItem);
                         }
-                         */
+
                     }
                 }
                 //sort부분 시작
@@ -177,14 +149,14 @@ public class MenuActivity extends AppCompatActivity{
             if (result.getContents() == null) {
                 return;
             }
-            /*
+
             final FoodItem selectedItem = datastructure.binarySearch(result.getContents());
-            //  Log.d("TAG", "onActivityResult: "+selectedItem.toString());
+            Log.d("TAG", "onActivityResult: "+selectedItem+"한국말");
             if (selectedItem == null) {
                 Toast.makeText(getApplicationContext(), "찾지 못하였습니다", Toast.LENGTH_LONG).show();
             }
 
-
+            //스낵바 부분
             Snackbar.make(this.getWindow().getDecorView(), selectedItem.getBarcode(), Snackbar.LENGTH_LONG)
                     .setAction("add to history", new View.OnClickListener() {
                         @Override
@@ -196,7 +168,49 @@ public class MenuActivity extends AppCompatActivity{
                                 userHistoryRef.child(key).setValue(selectedItem);
                             }
                         }
-                    }).show();*/
+                    }).show();
         }
+    }
+
+
+
+
+    /*
+        IMPLEMENTS METHOD ON IT
+     */
+
+    ///Watcher
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+        searchedItemList=datastructure.search(s.toString());
+        adapter.setFoodList(searchedItemList);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+
+    }
+
+
+    //OnClickListener
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()) {
+            case R.id.buttonSearch:
+                new IntentIntegrator(MenuActivity.this).initiateScan();
+                break;
+            case R.id.buttonAddMenu:
+                Intent addIntent = new Intent(MenuActivity.this,ItemAddActivity.class);
+                startActivity(addIntent);
+            case R.id.user_list:
+        }
+
     }
 }
