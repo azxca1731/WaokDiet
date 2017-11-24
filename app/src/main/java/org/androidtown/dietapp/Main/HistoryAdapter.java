@@ -60,7 +60,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.FoodView
                 .into(holder.imgView);
 
         holder.textName.setText(food.getName());
-        holder.textCal.setText(String.valueOf(food.getCalorie()));
+        holder.textCal.setText("칼로리: "+String.valueOf(food.getCalorie())+"Kcal");
         holder.key = food.getKey();
     }
 
@@ -78,8 +78,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.FoodView
         public FoodViewHolder(View itemView){
             super(itemView);
             imgView=(ImageView)itemView.findViewById((R.id.image_view));
-            textName=(TextView)itemView.findViewById(R.id.text_name);
-            textCal=(TextView)itemView.findViewById(R.id.text_cal);
+            textName=(TextView)itemView.findViewById(R.id.foodName);
+            textCal=(TextView)itemView.findViewById(R.id.foodCal);
 
 
             itemView.setOnClickListener(new View.OnClickListener() {

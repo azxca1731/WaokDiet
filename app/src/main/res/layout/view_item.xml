@@ -30,7 +30,7 @@
             android:orientation="vertical"
             android:layout_marginLeft="5dp">
             <TextView
-                android:id="@+id/text_name"
+                android:id="@+id/foodName"
                 android:textColor="#000"
                 android:text="name"
                 android:layout_width="wrap_content"
@@ -39,9 +39,9 @@
                 />
 
             <TextView
-                android:id="@+id/text_cal"
+                android:id="@+id/foodCal"
                 android:textColor="#000"
-                android:layout_below="@+id/text_name"
+                android:layout_below="@+id/foodName"
                 android:text="cal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

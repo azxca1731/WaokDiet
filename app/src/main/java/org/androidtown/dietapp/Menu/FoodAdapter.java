@@ -55,7 +55,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
     @Override
     public FoodViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         context = parent.getContext();
-        return new FoodViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.view_list_menu, parent, false));
+        return new FoodViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.view_item, parent, false));
     }
 
     @Override
@@ -69,11 +69,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
                 .into(holder.imageViewItems);
 
         holder.textName.setText(foodItem.getName());
-        holder.textCategory.setText("카테고리: " + foodItem.getCategory());
-        holder.textCal.setText("칼로리: " + String.valueOf(foodItem.getCalorie()));
-        holder.textProtain.setText("단백질: " + String.valueOf(foodItem.getProtein()));
-        holder.textCarbohydrate.setText("탄수화물: " + String.valueOf(foodItem.getCarbohydrate()));
-        holder.textFat.setText("지방: " + String.valueOf(foodItem.getFat()));
+        holder.textCal.setText("칼로리: " + String.valueOf(foodItem.getCalorie())+"Kcal");
         holder.food = foodItem;
 
     }
@@ -85,7 +81,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
     }
 
     class FoodViewHolder extends RecyclerView.ViewHolder {
-        TextView textName, textCategory, textCal, textProtain, textCarbohydrate, textFat;
+        TextView textName, textCal;
         ImageView imageViewItems;
         FoodItem food;
 
@@ -93,32 +89,14 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
             super(itemView);
 
             textName = (TextView) itemView.findViewById(R.id.foodName);
-            textCategory = (TextView) itemView.findViewById(R.id.foodCategory);
             textCal = (TextView) itemView.findViewById(R.id.foodCal);
-            textProtain = (TextView) itemView.findViewById(R.id.foodProtain);
-            textCarbohydrate = (TextView) itemView.findViewById(R.id.foodCarbohydrate);
-            textFat = (TextView) itemView.findViewById(R.id.foodFat);
-            imageViewItems = (ImageView) itemView.findViewById(R.id.imageViewItems);
+            imageViewItems = (ImageView) itemView.findViewById(R.id.image_view);
             food = new FoodItem();
 
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
-                    //다이얼로그 테스트중이니 일단 지우지 말아주세요. 제발 ㅠㅠ
-                    /*
-                    Snackbar.make(v, textName.getText() + " 선택", Snackbar.LENGTH_LONG).setAction("add to history", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if (historyRef != null) {
-                                key = UUID.randomUUID().toString();
-                                food.setKey(key);
-                                historyRef.child(key).setValue(food);
-                            }
-                        }
-                    }).show();
-                    */
                     CustomDialog dialog = new CustomDialog(context,food,historyRef);
                     dialog.show();
                 }
