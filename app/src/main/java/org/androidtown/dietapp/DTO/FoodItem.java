@@ -24,11 +24,6 @@ public class FoodItem{
     private int frequency;
     private String key;
     private String barcode;
-    private int natrium;
-    private int cholesterol;
-    private int saturatedfat;
-    private int transfat;
-
 
 
 

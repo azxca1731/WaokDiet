@@ -37,12 +37,13 @@ public class CustomDialog extends Dialog {
     private Context context;
     private StorageReference storageReference;
 
-    /*
-    private TextView foodName;
-    private TextView foodName;
-    private TextView foodName;
-    private TextView foodName;
-    */
+
+    private TextView foodSugar;
+    private TextView foodNatrium;
+    private TextView foodCholesterol;
+    private TextView foodSaturatedFat;
+    private TextView foodTransFat;
+
     private Button add;
     private Button cancel;
     private FoodItem food;
@@ -66,6 +67,11 @@ public class CustomDialog extends Dialog {
         foodCarbo=(TextView)findViewById(R.id.foodCarbohydrate);
         foodProtein=(TextView)findViewById(R.id.foodProtein);
         foodFat=(TextView)findViewById(R.id.foodFat);
+        foodSugar=(TextView)findViewById(R.id.foodSugar);
+        foodNatrium=(TextView)findViewById(R.id.foodNatrium);
+        foodCholesterol=(TextView)findViewById(R.id.foodCholesterol);
+        foodSaturatedFat=(TextView)findViewById(R.id.foodSaturatedFat);
+        foodTransFat=(TextView)findViewById(R.id.foodTransFat);
         add=(Button)findViewById((R.id.add));
         cancel=(Button)findViewById((R.id.cancel));
 
@@ -100,6 +106,11 @@ public class CustomDialog extends Dialog {
       foodProtein.setText("단백질: " + String.valueOf(food.getProtein())+ " g");
       foodCarbo.setText("탄수화물: " + String.valueOf(food.getCarbohydrate())+" g");
       foodFat.setText("지방: " + String.valueOf(food.getFat()) +" g");
+      foodSugar.setText("설탕: " + String.valueOf(food.getNatrium()) +" g");
+      foodNatrium.setText("나트륨: " + String.valueOf(food.getNatrium()) +" g");
+      foodCholesterol.setText("콜레스테롤: " + String.valueOf(food.getCholesterol()) +" g");
+      foodSaturatedFat.setText("지방: " + String.valueOf(food.getSaturatedFat()) +" g");
+      foodTransFat.setText("지방: " + String.valueOf(food.getTransFat()) +" g");
       Glide.with(context)
               .using(new FirebaseImageLoader())
               .load(storageReference.child("foodImage/" + food.getUid() + ".png"))

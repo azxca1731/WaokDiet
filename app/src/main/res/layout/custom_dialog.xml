@@ -72,21 +72,30 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/foodSugar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="sample"/>
+                <TextView
+                    android:id="@+id/foodNatrium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="sample" />
 
                 <TextView
+                    android:id="@+id/foodCholesterol"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="sample"/>
 
                 <TextView
+                    android:id="@+id/foodSaturatedFat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="sample"/>
 
                 <TextView
+                    android:id="@+id/foodTransFat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="sample"/>
