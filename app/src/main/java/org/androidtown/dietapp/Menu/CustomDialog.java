@@ -106,9 +106,9 @@ public class CustomDialog extends Dialog {
       foodProtein.setText("단백질: " + String.valueOf(food.getProtein())+ " g");
       foodCarbo.setText("탄수화물: " + String.valueOf(food.getCarbohydrate())+" g");
       foodFat.setText("지방: " + String.valueOf(food.getFat()) +" g");
-      foodSugar.setText("설탕: " + String.valueOf(food.getNatrium()) +" g");
-      foodNatrium.setText("나트륨: " + String.valueOf(food.getNatrium()) +" g");
-      foodCholesterol.setText("콜레스테롤: " + String.valueOf(food.getCholesterol()) +" g");
+      foodSugar.setText("당: " + String.valueOf(food.getSugar()) +" g");
+      foodNatrium.setText("나트륨: " + String.valueOf(food.getNatrium()) +" mg");
+      foodCholesterol.setText("콜레스테롤: " + String.valueOf(food.getCholesterol()) +" mg");
       foodSaturatedFat.setText("지방: " + String.valueOf(food.getSaturatedFat()) +" g");
       foodTransFat.setText("지방: " + String.valueOf(food.getTransFat()) +" g");
       Glide.with(context)
