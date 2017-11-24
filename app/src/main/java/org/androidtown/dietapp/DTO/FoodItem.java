@@ -26,7 +26,6 @@ public class FoodItem{
     private String barcode;
 
 
-
     public FoodItem() {
         setFrequency(0);
         key = "1";
@@ -173,7 +172,7 @@ public class FoodItem{
     public void setBarcode(String barcode) {
         this.barcode = barcode;
     }
-    
+
     public String getKey() {
         return key;
     }
