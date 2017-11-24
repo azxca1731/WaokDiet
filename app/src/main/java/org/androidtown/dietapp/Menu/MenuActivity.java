@@ -43,7 +43,6 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
     private String dateStr;
     private static final String TAG = "MENUACTIVITY";
     public ArrayList<FoodItem> foodItemList;
-    public ArrayList<FoodItem> barcodeItemList;
     FoodItem selectedItem;
 
 
@@ -72,14 +71,11 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         userHistoryRef =database.getReference().child("userHistory").child(user.getUid()).child(dateStr);
         foodRef = database.getReference().child("food");
         //firebase init end
-        barcodeItemList= new ArrayList<FoodItem>();
         foodItemList = new ArrayList<FoodItem>();
 
 
         //자료구조 데모 init
-        datastructure=DataStructure.getInstance();
-        datastructure.setFoodList(foodItemList);
-        datastructure.setBarcodeList(barcodeItemList);
+        datastructure= new DataStructure(foodItemList);
         //자료구조 데모 init 끝
 
         recyclerView=(RecyclerView)findViewById(R.id.user_list);
@@ -116,7 +112,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
                         foodItemList.add(foodItem);
                          if(foodItem.getBarcode()!="0"){
                              //바코드가 있는 음식의 경우 받아온다.
-                            barcodeItemList.add(foodItem);
+                            datastructure.getBarcodeList().add(foodItem);
                         }
 
                     }

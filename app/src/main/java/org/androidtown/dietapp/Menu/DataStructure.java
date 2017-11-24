@@ -12,19 +12,16 @@ import java.util.Comparator;
  */
 
 public class DataStructure {
-    private static DataStructure dataStructure;
     private ArrayList<FoodItem> foodList;
     private ArrayList<FoodItem> searchList;
     private ArrayList<FoodItem> barcodeList;
 
-    private DataStructure() {
+    public DataStructure( ArrayList<FoodItem> foodList) {
+        this.foodList = foodList;
         searchList=new ArrayList<FoodItem>();
+        barcodeList=new ArrayList<FoodItem>();
     }
 
-    public static DataStructure getInstance(){
-        if(dataStructure==null)dataStructure=new DataStructure();
-        return dataStructure;
-    }
 
     public void setFoodList(ArrayList<FoodItem> foodList) {
         this.foodList = foodList;
@@ -32,10 +29,6 @@ public class DataStructure {
 
     public void setBarcodeList(ArrayList<FoodItem> barcodeList) {
         this.barcodeList = barcodeList;
-    }
-
-    public ArrayList<FoodItem> getFoodList() {
-        return foodList;
     }
 
     public void sort(){

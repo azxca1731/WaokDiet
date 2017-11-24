@@ -18,7 +18,6 @@ package org.androidtown.dietapp.Auth;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
@@ -136,9 +135,6 @@ public class EmailPasswordDialogue extends Activity implements
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
-                            Intent UserInfoIntent=new Intent(EmailPasswordDialogue.this,UserInfoActivity.class);
-                            startActivity(UserInfoIntent);
                             finish();
                         } else {
                             // If sign in fails, display a message to the user.

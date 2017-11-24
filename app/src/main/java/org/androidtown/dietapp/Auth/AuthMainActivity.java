@@ -52,20 +52,17 @@ import java.util.Map;
 import static com.kakao.util.helper.Utility.getPackageInfo;
 
 public class AuthMainActivity extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
-    /*
-    TODO:
-        구글 로그인 후 카카오톡 로그인이 안되는 오류는 발견
-        그리고 못고칠듯 ㅋ 너무 깊숙함
-     */
-    GoogleApiClient mGoogleApiClient;
-    FirebaseAuth mAuth;
-    LoginButton loginButton;
 
+    private GoogleApiClient mGoogleApiClient;
+    private FirebaseAuth mAuth;
+    private LoginButton loginButton;
+    public ISessionCallback myCallback;
     @VisibleForTesting
     public ProgressDialog mProgressDialog;
 
     private static final int RC_SIGN_IN = 9001;
     String TAG = "AuthMain";
+    private BackPressCloseHandler backPressCloseHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +94,9 @@ public class AuthMainActivity extends AppCompatActivity implements View.OnClickL
         findViewById(R.id.sign_in_button).setOnClickListener(this);
         findViewById(R.id.emailButton).setOnClickListener(this);
 
-        Session.getCurrentSession().addCallback(new KakaoSessionCallback());
+        myCallback = new KakaoSessionCallback();
+        Session.getCurrentSession().addCallback(myCallback);
+        backPressCloseHandler = new BackPressCloseHandler(this);
     }
 
     @Override
@@ -118,6 +117,14 @@ public class AuthMainActivity extends AppCompatActivity implements View.OnClickL
     private void signIn(){
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        if(FirebaseAuth.getInstance().getCurrentUser()!=null){
+            goToUserInfo();
+        }
     }
 
     @Override
@@ -157,10 +164,10 @@ public class AuthMainActivity extends AppCompatActivity implements View.OnClickL
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            hideProgressDialog();
                             goToUserInfo();
                         } else {
                             // If sign in fails, display a message to the user.
+                            hideProgressDialog();
                             Log.d(TAG, "signInWithCredential:fail");
                         }
                     }
@@ -172,7 +179,7 @@ public class AuthMainActivity extends AppCompatActivity implements View.OnClickL
         if(mAuth.getCurrentUser()!=null){
             super.onBackPressed();
         }
-        getKeyHash(this);
+        backPressCloseHandler.onBackPressed();
     }
 
     ///카카오톡 메소드 시작
@@ -225,7 +232,6 @@ public class AuthMainActivity extends AppCompatActivity implements View.OnClickL
      */
     private class KakaoSessionCallback implements ISessionCallback {
 
-
         @Override
         public void onSessionOpened() {
             showProgressDialog();
@@ -241,15 +247,14 @@ public class AuthMainActivity extends AppCompatActivity implements View.OnClickL
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
-                        onStop();
-                        hideProgressDialog();
+                        Log.d(TAG, "onCreate: "+ this +"있어 시발");
                         goToUserInfo();
                     } else {
-                        Toast.makeText(getApplicationContext(), "Failed to create a Firebase user.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "다시 한번 시도해보세요", Toast.LENGTH_LONG).show();
+                        hideProgressDialog();
                         if (task.getException() != null) {
                             Log.e(TAG, task.getException().toString());
                         }
-                        onStop();
                     }
                 }
             });
@@ -292,15 +297,22 @@ public class AuthMainActivity extends AppCompatActivity implements View.OnClickL
 
     //유저 정보창으로 이동
     public void goToUserInfo(){
+        hideProgressDialog();
         Intent UserInfoIntenet=new Intent(AuthMainActivity.this,UserInfoActivity.class);
         startActivity(UserInfoIntenet);
         finish();
     }
 
+    @Override
+    public void finish() {
+        Session.getCurrentSession().removeCallback(myCallback);
+        super.finish();
+    }
+
     /*
-    진행되고 있는지 안되는 지를 알려주는 다이얼로그
-                                             쓰실분은 쓰세영
-     */
+        진행되고 있는지 안되는 지를 알려주는 다이얼로그
+                                                 쓰실분은 쓰세영
+         */
     public void showProgressDialog() {
         if (mProgressDialog == null) {
             mProgressDialog = new ProgressDialog(this);
@@ -316,9 +328,5 @@ public class AuthMainActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        hideProgressDialog();
-    }
+
 }
