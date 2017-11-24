@@ -17,6 +17,11 @@ public class FoodItem implements Comparable<FoodItem>{
     private int frequency;
     private String key;
     private String barcode;
+    private int natrium;
+    private int cholesterol;
+    private int saturatedfat;
+    private int transfat;
+
 
     public String getKey() {
         return key;
@@ -124,6 +129,37 @@ public class FoodItem implements Comparable<FoodItem>{
         this.barcode = barcode;
     }
 
-    //getter setter end
+    public int getNatrium() {
+        return natrium;
+    }
+
+    public void setNatrium(int natrium) {
+        this.natrium = natrium;
+    }
+
+    public int getCholesterol() {
+        return cholesterol;
+    }
+
+    public void setCholesterol(int cholesterol) {
+        this.cholesterol = cholesterol;
+    }
+
+    public int getSaturaedfat() {
+        return saturatedfat;
+    }
+
+    public void setSaturaedfat(int saturaedfat) {
+        this.saturatedfat = saturaedfat;
+    }
+
+    public int getTransfat() {
+        return transfat;
+    }
+
+    public void setTransfat(int transfat) {
+        this.transfat = transfat;
+    }
+//getter setter end
 
 }
