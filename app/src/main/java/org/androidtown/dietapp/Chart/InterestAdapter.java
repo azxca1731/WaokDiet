@@ -13,10 +13,12 @@ import com.bumptech.glide.Glide;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import org.androidtown.dietapp.DTO.FoodItem;
+import org.androidtown.dietapp.Menu.CustomDialog;
 import org.androidtown.dietapp.R;
 
 import java.util.List;
@@ -57,7 +59,6 @@ public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.FoodVi
 
         holder.textName.setText(food.getName());
         holder.frequency.setText(food.getFrequency()+"회");
-        holder.key = food.getUid();
     }
 
 
@@ -66,11 +67,17 @@ public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.FoodVi
         return historyList.size();
     }
 
+    public void setHistoryRef(DatabaseReference historyRef) {
+        this.historyRef = historyRef;
+    }
+
+    private DatabaseReference historyRef;
+
     class FoodViewHolder extends RecyclerView.ViewHolder{
         ImageView imgView;
         TextView textName;
         TextView frequency;
-        String key;
+        FoodItem food;
 
         public FoodViewHolder(final View itemView){
             super(itemView);
@@ -78,6 +85,7 @@ public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.FoodVi
             textName=(TextView)itemView.findViewById(R.id.text_name_inInterest);
             frequency = (TextView)itemView.findViewById((R.id.text_cal_inInterest));
 
+            food = new FoodItem();
 
 
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -86,14 +94,8 @@ public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.FoodVi
                     Snackbar.make(v,textName.getText()+"의 내용보기 ",Snackbar.LENGTH_LONG).setAction("선택", new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                            String uid = user.getUid();
-                            for(int i=0; i<5; i++){
-                                    if(historyList.get(i).getUid().equals(key)){
-                                        set_number(i);
-                                        break;
-                                    }
-                                }
+                            InterestDialog dialog = new InterestDialog(context,food);
+                            dialog.show();
                         }
                     }).show();
                 }

@@ -40,9 +40,14 @@ public class ViewCalendarActivity extends AppCompatActivity {
     private DatabaseReference UserHistory;
     private DatabaseReference mDatabase;
 
-    //탄단지
+    //영양소
     private float rat_carbo, rat_protein, rat_fat;
     private int carbo,protein,fat;
+    private int sugar;
+    private int natrium;
+    private int cholesterol;
+    private int saturatedFat;
+    private int transFat;
 
     // 파이어베이스에 검색할 날짜
     private String date;
@@ -126,6 +131,9 @@ public class ViewCalendarActivity extends AppCompatActivity {
                         setProtein(getProtein() + foodItem.getProtein());
                         setFat(getFat() + foodItem.getFat());
                         setSum(sum + getCarbo() + getFat() + getProtein());
+                        setSugar(getSugar() + foodItem.getSugar()); setSaturatedFat(getSaturatedFat() + foodItem.getSaturatedFat());
+                        setTransFat(getTransFat() + foodItem.getTransFat()); setCholesterol( getCholesterol() + foodItem.getCholesterol());
+                        setNatrium(getNatrium() + foodItem.getNatrium());
                     }
                     setCircleGraph();
                     adapter.notifyDataSetChanged();
@@ -151,18 +159,31 @@ public class ViewCalendarActivity extends AppCompatActivity {
     // 조언
     private void theAdvise(){
         if(rat_carbo>=45){
-            textView.setText("탄수화물을 너무 많이 섭취하고 있습니다!");
+            textView.setText("탄수화물을 너무 많이 섭취하고 있습니다!\n");
         }else if(rat_protein>=60){
-            textView.setText("단백질을 너무 많이 섭취하고 있습니다!");
+            textView.setText("단백질을 너무 많이 섭취하고 있습니다!\n");
         }else if(rat_fat>=35){
-            textView.setText("지방을 너무 많이 섭취하고 있습니다!");
+            textView.setText("지방을 너무 많이 섭취하고 있습니다!\n");
         }else if(rat_protein<40){
-            textView.setText("단백질의 섭취량이 너무 낮습니다.");
+            textView.setText("단백질의 섭취량이 너무 낮습니다.\n");
         }else if(rat_fat<15){
-            textView.setText("지방의 섭취량이 너무 낮습니다.");
+            textView.setText("지방의 섭취량이 너무 낮습니다.\n");
         }else if(rat_carbo<25) {
-            textView.setText("탄수화물의 섭취량이 너무 낮습니다.");
-        }else textView.setText("적당히 균형잡힌 식단이군요.");
+            textView.setText("탄수화물의 섭취량이 너무 낮습니다.\n");
+        }else textView.setText("적당히 균형잡힌 식단이군요.\n");
+        if(getNatrium()>6){
+            textView.append("나트륨의 섭취량이 많습니다.\n");
+        }if(getSugar()>50){
+            textView.append("당의 섭취량이 많습니다.\n");
+        }if(getTransFat()>2){
+            textView.append("트랜스지방의 섭취량이 많습니다.\n");
+        }if(getSaturatedFat()>15){
+            textView.append("포화지방의 섭취량이 많습니다.\n");
+        }if(getCholesterol()>200){
+            textView.append("콜레스테롤의 섭취량이 많습니다.\n");
+        }
+
+
     }
 
     // draw cicle graph
@@ -225,11 +246,16 @@ public class ViewCalendarActivity extends AppCompatActivity {
         return vo;
     }
 
-    //탄단지 초기화
+    //영양소 초기화
     public void setzero(){
         setCarbo(0);
         setProtein(0);
         setFat(0);
+        setSaturatedFat(0);
+        setSugar(0);
+        setNatrium(0);
+        setCholesterol(0);
+        setTransFat(0);
     }
 
     // getter and setter
@@ -252,5 +278,35 @@ public class ViewCalendarActivity extends AppCompatActivity {
     }
     public void setFat(int fat) {
         this.fat = fat;
+    }
+    public int getSugar() {
+        return sugar;
+    }
+    public void setSugar(int sugar) {
+        this.sugar = sugar;
+    }
+    public int getNatrium() {
+        return natrium;
+    }
+    public void setNatrium(int natrium) {
+        this.natrium = natrium;
+    }
+    public int getCholesterol() {
+        return cholesterol;
+    }
+    public void setCholesterol(int cholesterol) {
+        this.cholesterol = cholesterol;
+    }
+    public int getSaturatedFat() {
+        return saturatedFat;
+    }
+    public void setSaturatedFat(int saturatedFat) {
+        this.saturatedFat = saturatedFat;
+    }
+    public int getTransFat() {
+        return transFat;
+    }
+    public void setTransFat(int transFat) {
+        this.transFat = transFat;
     }
 }

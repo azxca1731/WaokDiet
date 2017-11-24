@@ -50,6 +50,11 @@ public class ViewUserInterestFragment extends android.support.v4.app.Fragment{
     private TextView rank_carbo;
     private TextView rank_fat;
     private TextView rank_protein;
+    private TextView rank_sugar;
+    private TextView rank_chol;
+    private TextView rank_s_fat;
+    private TextView rank_t_fat;
+    private TextView rank_natrium;
 
     //
     private int carbo, protein, fat;
@@ -93,6 +98,11 @@ public class ViewUserInterestFragment extends android.support.v4.app.Fragment{
         rank_carbo = (TextView) layoutGraphView.findViewById(R.id.Rank_carbo);
         rank_fat = (TextView) layoutGraphView.findViewById(R.id.Rank_fat);
         rank_protein = (TextView) layoutGraphView.findViewById(R.id.Rank_protein);
+        rank_s_fat = (TextView) layoutGraphView.findViewById(R.id.Rank_s_fat);
+        rank_t_fat = (TextView) layoutGraphView.findViewById(R.id.Rank_transfat);
+        rank_sugar = (TextView) layoutGraphView.findViewById(R.id.Rank_sugar);
+        rank_natrium = (TextView) layoutGraphView.findViewById(R.id.Rank_natrium);
+        rank_chol = (TextView) layoutGraphView.findViewById(R.id.Rank_chol);
         image = (ImageView) layoutGraphView.findViewById(R.id.image_in_interest);
 
         // 리스트 객체생성
@@ -191,12 +201,17 @@ public class ViewUserInterestFragment extends android.support.v4.app.Fragment{
     private void set_rank_food(){
         if(interestList.size()!=0){
             if(activity.isFinishing()) {return;}
-            Glide.with(activity).using(new FirebaseImageLoader()).load(storageReference.child("foodImage/" + interestList.get(adapter.get_number()).getUid() + ".png")).into(image);
-            rank_name.setText("이름 : " + interestList.get(adapter.get_number()).getName());
-            rank_carbo.setText("탄수화물 : " + interestList.get(adapter.get_number()).getCarbohydrate() + "g");
-            rank_cal.setText("칼로리 : " + interestList.get(adapter.get_number()).getCalorie() + "kcal");
-            rank_protein.setText("단백질 : " + interestList.get(adapter.get_number()).getProtein() + "g");
-            rank_fat.setText("지방 : " + interestList.get(adapter.get_number()).getFat() + "g");
+            Glide.with(activity).using(new FirebaseImageLoader()).load(storageReference.child("foodImage/" + interestList.get(0).getUid() + ".png")).into(image);
+            rank_name.setText("이름 : " + interestList.get(0).getName());
+            rank_carbo.setText("탄수화물 : " + interestList.get(0).getCarbohydrate() + "g");
+            rank_cal.setText("칼로리 : " + interestList.get(0).getCalorie() + "kcal");
+            rank_protein.setText("단백질 : " + interestList.get(0).getProtein() + "g");
+            rank_fat.setText("지방 : " + interestList.get(0).getFat() + "g");
+            rank_sugar.setText("당 : " + interestList.get(0).getSugar() + "g");
+            rank_t_fat.setText("트랜스지방 : " + interestList.get(0).getTransFat() + "g");
+            rank_s_fat.setText("포화지방 : " + interestList.get(0).getSaturatedFat() + "g");
+            rank_natrium.setText("나트륨 : " + interestList.get(0).getNatrium() + "g");
+            rank_chol.setText("콜레스테롤 : " + interestList.get(0).getCholesterol() + "g");
         }else{
             return;
         }
