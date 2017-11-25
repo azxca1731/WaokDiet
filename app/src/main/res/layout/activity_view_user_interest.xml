@@ -14,7 +14,7 @@
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/view_user_interest"
-        android:layout_width="206dp"
+        android:layout_width="240dp"
         android:layout_height="390dp"
         android:layout_marginBottom="4dp"
         android:layout_marginEnd="8dp"
@@ -31,7 +31,7 @@
         <ImageView
             android:id="@+id/image_in_interest"
             android:layout_width="168dp"
-            android:layout_height="140dp"
+            android:layout_height="149dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
@@ -40,135 +40,140 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/Rank_cal"
+            android:layout_width="120dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="28dp"
             android:gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Rank_Name" />
+
+        <TextView
             android:id="@+id/Rank_Name"
             android:layout_width="168dp"
-            android:layout_height="55dp"
+            android:layout_height="20dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/image_in_interest" />
 
         <TextView
-            android:id="@+id/Rank_cal"
-            android:layout_width="168dp"
-            android:layout_height="10dp"
+            android:id="@+id/Rank_carbo"
+            android:layout_width="120dp"
+            android:layout_height="20dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="28dp"
             android:gravity="center"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/Rank_cal"
             app:layout_constraintTop_toBottomOf="@+id/Rank_Name" />
 
         <TextView
-            android:id="@+id/Rank_carbo"
-            android:layout_width="168dp"
-            android:layout_height="10dp"
+            android:id="@+id/Rank_protein"
+            android:layout_width="120dp"
+            android:layout_height="20dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="16dp"
             android:gravity="center"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Rank_cal" />
 
         <TextView
-            android:id="@+id/Rank_protein"
-            android:layout_width="168dp"
-            android:layout_height="10dp"
+            android:id="@+id/Rank_fat"
+            android:layout_width="120dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/Rank_protein"
+            app:layout_constraintTop_toBottomOf="@+id/Rank_carbo" />
+
+        <TextView
+            android:id="@+id/Rank_transfat"
+            android:layout_width="120dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Rank_protein" />
+
+        <TextView
+            android:id="@+id/Rank_s_fat"
+            android:layout_width="120dp"
+            android:layout_height="20dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:gravity="center"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Rank_carbo" />
+            app:layout_constraintStart_toEndOf="@+id/Rank_transfat"
+            app:layout_constraintTop_toBottomOf="@+id/Rank_fat" />
 
         <TextView
-            android:id="@+id/Rank_fat"
-            android:layout_width="168dp"
-            android:layout_height="10dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="12dp"
-            android:gravity="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Rank_protein" />
-
-        <TextView
-            android:id="@+id/Rank_transfat"
-            android:layout_width="168dp"
-            android:layout_height="10dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="12dp"
-            android:gravity="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Rank_sugar" />
-
-        <TextView
-            android:id="@+id/Rank_s_fat"
-            android:layout_width="168dp"
-            android:layout_height="10dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="12dp"
-            android:gravity="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Rank_transfat" />
-        <TextView
-            android:gravity="center"
             android:id="@+id/Rank_natrium"
-            android:layout_width="168dp"
+            android:layout_width="120dp"
             android:layout_height="20dp"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            app:layout_constraintVertical_bias="0.703" />
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Rank_sugar"
+            app:layout_constraintVertical_bias="1.0" />
 
         <TextView
             android:id="@+id/Rank_chol"
-            android:layout_width="168dp"
-            android:layout_height="10dp"
+            android:layout_width="120dp"
+            android:layout_height="20dp"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Rank_s_fat"
-            app:layout_constraintVertical_bias="0.121" />
+            app:layout_constraintTop_toBottomOf="@+id/Rank_transfat"
+            app:layout_constraintVertical_bias="0.222" />
 
         <TextView
             android:id="@+id/Rank_sugar"
-            android:layout_width="168dp"
-            android:layout_height="10dp"
+            android:layout_width="120dp"
+            android:layout_height="20dp"
             android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Rank_chol" />
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/Rank_chol"
+            app:layout_constraintTop_toBottomOf="@+id/Rank_s_fat"
+            app:layout_constraintVertical_bias="0.222" />
 
     </android.support.constraint.ConstraintLayout>
 
     <TextView
         android:id="@+id/text_in_viewUser_interest"
-        android:layout_width="336dp"
+        android:layout_width="363dp"
         android:layout_height="70dp"
-        android:textStyle="bold"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:layout_gravity="center"
@@ -177,6 +182,7 @@
         android:background="@drawable/back"
         android:gravity="center"
         android:text="TextView"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />

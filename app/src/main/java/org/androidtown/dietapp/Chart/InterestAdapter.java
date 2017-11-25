@@ -59,6 +59,7 @@ public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.FoodVi
 
         holder.textName.setText(food.getName());
         holder.frequency.setText(food.getFrequency()+"회");
+        holder.food = food;
     }
 
 

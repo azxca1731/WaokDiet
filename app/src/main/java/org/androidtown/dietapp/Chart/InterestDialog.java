@@ -82,7 +82,7 @@ public class InterestDialog extends Dialog {
             @Override
             public void onClick(View v) {
                 switch (v.getId()){
-                    case R.id.cancel:
+                    case R.id.i_cancel:
                         cancel();
                         break;
                 }
