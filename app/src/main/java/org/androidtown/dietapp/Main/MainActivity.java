@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -66,13 +67,13 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseDatabase database;
     private DatabaseReference myHistoryRef;
     private FirebaseUser user;
+    private Boolean admin; //관리자 계정인지 확인
     //데이터베이스 끝
 
     //레이아웃
     private BottomNavigationView bottomNav;
     private ProgressBar calorie_pbar;
     private TextView percentage_view;
-    private View.OnClickListener listener;
     //레이아웃 끝
 
     //기타 변수
@@ -112,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
 
         //데이터 베이스 시작
         if(user!=mAuth.getCurrentUser())initDatabase();
+        admin=false;
         //데이터 베이스 끝
 
         //바텀 네비게이션 바
@@ -132,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.action_menu:
                         Intent menuIntent = new Intent(MainActivity.this,MenuActivity.class);
                         menuIntent.putExtra("dateStr",dateStr);
+                        menuIntent.putExtra("admin",admin);
                         startActivity(menuIntent);
                         break;
                     case R.id.action_userInfo:
@@ -220,6 +223,7 @@ public class MainActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         basicCalRef = database.getReference().child("user").child(user.getUid()).child("basicCalorie");
         myHistoryRef = database.getReference().child("userHistory").child(user.getUid()).child(dateStr);
+        isAdmin();
     }
 
     private void getDate(){
@@ -246,6 +250,30 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         super.onPostResume();
+    }
+
+    private void isAdmin(){
+        if (database.getReference().child("admin").child(user.getUid())==null) {
+            return;
+        }
+        database.getReference().child("admin").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    if(snapshot.getKey().equals(user.getUid())){
+                        admin=snapshot.getValue(Boolean.class);
+                        return;
+                    }
+                }
+
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
     }
 
 }

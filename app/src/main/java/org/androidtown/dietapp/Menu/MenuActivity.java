@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -41,9 +42,10 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
     private FoodAdapter adapter;
     private FirebaseUser user;
     private String dateStr;
+    private Boolean admin;
     private static final String TAG = "MENUACTIVITY";
-    public ArrayList<FoodItem> foodItemList;
-    FoodItem selectedItem;
+    private ArrayList<FoodItem> foodItemList;
+    private FoodItem selectedItem;
 
 
 
@@ -67,7 +69,11 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         user = mAuth.getCurrentUser();
 
         dateStr = getIntent().getStringExtra("dateStr");
+        admin=getIntent().getBooleanExtra("admin",false);
         database = FirebaseDatabase.getInstance();
+
+        Log.d(TAG, "!!!!!!!!!!!!!!!!!"+admin);
+
         userHistoryRef =database.getReference().child("userHistory").child(user.getUid()).child(dateStr);
         foodRef = database.getReference().child("food");
         //firebase init end
@@ -78,6 +84,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         datastructure= new DataStructure(foodItemList);
         //자료구조 데모 init 끝
 
+        //리사이클러 뷰 시작
         recyclerView=(RecyclerView)findViewById(R.id.user_list);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager lim = new LinearLayoutManager(this);
@@ -87,13 +94,15 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         adapter.setHistoryRef(userHistoryRef);
         recyclerView.setAdapter(adapter);
         updateFoodList();
+        //리사이클러 뷰 끝
 
         //button
         buttonSearch=(Button)findViewById(R.id.buttonSearch);
-        buttonAddMenu=(Button)findViewById(R.id.buttonAddMenu);
+        if(admin==true) {
+            buttonAddMenu = (Button) findViewById(R.id.buttonAddMenu);
+            buttonAddMenu.setOnClickListener(this);
+        }
         edit=(EditText)findViewById(R.id.edit);
-
-        buttonAddMenu.setOnClickListener(this);
         buttonSearch.setOnClickListener(this);
         edit.addTextChangedListener(this);
     }

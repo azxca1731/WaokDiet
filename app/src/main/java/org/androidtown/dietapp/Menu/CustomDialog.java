@@ -116,8 +116,8 @@ public class CustomDialog extends Dialog {
       foodSugar.setText("당: " + String.valueOf(food.getSugar()) +" g");
       foodNatrium.setText("나트륨: " + String.valueOf(food.getNatrium()) +" mg");
       foodCholesterol.setText("콜레스테롤: " + String.valueOf(food.getCholesterol()) +" mg");
-      foodSaturatedFat.setText("지방: " + String.valueOf(food.getSaturatedFat()) +" g");
-      foodTransFat.setText("지방: " + String.valueOf(food.getTransFat()) +" g");
+      foodSaturatedFat.setText("포화지방: " + String.valueOf(food.getSaturatedFat()) +" g");
+      foodTransFat.setText("트랜스지방: " + String.valueOf(food.getTransFat()) +" g");
       Glide.with(context)
               .using(new FirebaseImageLoader())
               .load(storageReference.child("foodImage/" + food.getUid() + ".png"))
