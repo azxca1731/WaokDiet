@@ -254,11 +254,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void isAdmin(){
         if (database.getReference().child("admin").child(user.getUid())==null) {
+            admin=false;
             return;
         }
         database.getReference().child("admin").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                admin=false;
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     if(snapshot.getKey().equals(user.getUid())){
                         admin=snapshot.getValue(Boolean.class);

@@ -98,9 +98,12 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
 
         //button
         buttonSearch=(Button)findViewById(R.id.buttonSearch);
+        buttonAddMenu = (Button) findViewById(R.id.buttonAddMenu);
         if(admin==true) {
-            buttonAddMenu = (Button) findViewById(R.id.buttonAddMenu);
             buttonAddMenu.setOnClickListener(this);
+        }
+        else{
+            buttonAddMenu.setVisibility(View.INVISIBLE);
         }
         edit=(EditText)findViewById(R.id.edit);
         buttonSearch.setOnClickListener(this);
