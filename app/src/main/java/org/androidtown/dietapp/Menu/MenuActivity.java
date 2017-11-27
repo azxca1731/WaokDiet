@@ -8,7 +8,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -47,8 +46,6 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
     private ArrayList<FoodItem> foodItemList;
     private FoodItem selectedItem;
 
-
-
     //자료구조 데모 선언 시작
     private DataStructure datastructure;
     private ArrayList<FoodItem> searchedItemList;
@@ -58,8 +55,6 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_menu);
-
         init();
     }
 
@@ -71,8 +66,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         dateStr = getIntent().getStringExtra("dateStr");
         admin=getIntent().getBooleanExtra("admin",false);
         database = FirebaseDatabase.getInstance();
-
-        Log.d(TAG, "!!!!!!!!!!!!!!!!!"+admin);
+        setAdminXML();
 
         userHistoryRef =database.getReference().child("userHistory").child(user.getUid()).child(dateStr);
         foodRef = database.getReference().child("food");
@@ -98,13 +92,6 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
 
         //button
         buttonSearch=(Button)findViewById(R.id.buttonSearch);
-        buttonAddMenu = (Button) findViewById(R.id.buttonAddMenu);
-        if(admin==true) {
-            buttonAddMenu.setOnClickListener(this);
-        }
-        else{
-            buttonAddMenu.setVisibility(View.INVISIBLE);
-        }
         edit=(EditText)findViewById(R.id.edit);
         buttonSearch.setOnClickListener(this);
         edit.addTextChangedListener(this);
@@ -231,5 +218,16 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.user_list:
         }
 
+    }
+
+    public void setAdminXML(){
+        if(admin==true){
+            setContentView(R.layout.activity_menu_admin);
+            buttonAddMenu = (Button) findViewById(R.id.buttonAddMenu);
+            buttonAddMenu.setOnClickListener(this);
+        }
+        else{
+            setContentView(R.layout.activity_menu_user);
+        }
     }
 }

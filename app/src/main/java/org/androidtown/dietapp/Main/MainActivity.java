@@ -25,6 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import org.androidtown.dietapp.Auth.AuthMainActivity;
+import org.androidtown.dietapp.Auth.BackPressCloseHandler;
 import org.androidtown.dietapp.Auth.UserInfoActivity;
 import org.androidtown.dietapp.Chart.ChartActivity;
 import org.androidtown.dietapp.Friend.ViewFriendActivity;
@@ -78,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
     //기타 변수
     public static Context mainContext;
+    private BackPressCloseHandler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
         percentage_view=(TextView)findViewById(R.id.view_percentage);
         progress=0;
         setProgress();
+        handler=new BackPressCloseHandler(this);
 
         bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -276,6 +279,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+    }
+    @Override
+    public void onBackPressed() {
+        handler.onBackPressed();
     }
 
 }
