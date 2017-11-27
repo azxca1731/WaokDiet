@@ -11,7 +11,7 @@ import java.lang.reflect.Field;
 /**
  * Created by Tae-Hyun on 2017-11-21.
  */
-
+//메인에 있는 바텀내비게이션바에서 항목이 4개가 되면 타이틀이 숨어버리는 부분을 해결하기 위해서 만든 클래스 입니다.
 public class BottomNavigationViewHelper {
     @SuppressLint("RestrictedApi")
     public static void removeShiftMode(BottomNavigationView view) {

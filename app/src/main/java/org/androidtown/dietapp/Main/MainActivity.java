@@ -78,14 +78,149 @@ public class MainActivity extends AppCompatActivity {
     //레이아웃 끝
 
     //기타 변수
-    public static Context mainContext;
     private BackPressCloseHandler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        init();
+    }
 
+    //나의 기초대사량을 가져오기
+    private void setProgress()
+    {
+        if(basicCalRef==null){
+            return;
+        }
+        basicCalRef.addValueEventListener( new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                basicCal = dataSnapshot.getValue(int.class);
+                calculateTodayCal();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    //오늘 먹은 음식의 칼로리와 기초대사량의 백분율 계산
+    private void calculateTodayCal(){
+        if(basicCal==0)return;
+        todayCal=0;
+        for(int i=0;i<historyList.size();i++){
+            int cal = historyList.get(i).getCalorie();
+            todayCal = todayCal+cal;
+        }
+        calorie_pbar.setMax(100);
+        progress = todayCal*100;
+        progress = progress/basicCal;
+
+        calorie_pbar.setProgress(progress);
+        percentage_view.setText(progress + "%");
+        if(progress <= 100){
+            calorie_pbar.setProgressTintList(ColorStateList.valueOf(Color.parseColor("#FFFACC35")));
+        }else{
+            calorie_pbar.setProgressTintList(ColorStateList.valueOf(Color.parseColor("#FF1100")));
+        }
+    }
+    //내가 오늘 먹은 음식 가져오기
+    private void updateHistoryList() {
+        if(myHistoryRef==null){
+            return;
+        }
+        myHistoryRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                historyList.clear();
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    FoodItem food = snapshot.getValue(FoodItem.class);
+                    historyList.add(food);
+                }
+                calculateTodayCal();
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    //데이터 베이스 레퍼런스 연동
+    public void initDatabase(){
+        database = FirebaseDatabase.getInstance();
+        basicCalRef = database.getReference().child("user").child(user.getUid()).child("basicCalorie");
+        myHistoryRef = database.getReference().child("userHistory").child(user.getUid()).child(dateStr);
+        isAdmin();
+    }
+
+    //시스템상의 시간 가져오기
+    private void getDate(){
+        now=System.currentTimeMillis();
+        dateFormat = new SimpleDateFormat("yyyyMMdd", Locale.KOREA);
+        date = new Date(now);
+        dateStr =  dateFormat.format(date);
+    }
+
+    @Override
+    protected void onPostResume() {
+        if(user!=FirebaseAuth.getInstance().getCurrentUser()){
+            user = FirebaseAuth.getInstance().getCurrentUser();
+            if(user==null) {
+                Intent AuthIntent= new Intent(MainActivity.this, AuthMainActivity.class);
+                startActivity(AuthIntent);
+                user=FirebaseAuth.getInstance().getCurrentUser();
+            }else {
+                getDate();
+                initDatabase();
+                adapter.setHistoryRef(myHistoryRef);
+                updateHistoryList();
+                setProgress();
+            }
+        }
+        super.onPostResume();
+    }
+
+    //내가 어드민 계정인지 아닌지 확인
+    private void isAdmin(){
+        if (database.getReference().child("admin").child(user.getUid())==null) {
+            admin=false;
+            return;
+        }
+        database.getReference().child("admin").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                admin=false;
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    if(snapshot.getKey().equals(user.getUid())){
+                        admin=snapshot.getValue(Boolean.class);
+                        return;
+                    }
+                }
+
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+    }
+
+    //뒤로가기 버튼
+    @Override
+    public void onBackPressed() {
+        handler.onBackPressed();
+    }
+
+    //여러가지 변수들 초기화
+    public void init(){
         getDate();
 
         FirebaseAuth mAuth= FirebaseAuth.getInstance();
@@ -97,8 +232,6 @@ public class MainActivity extends AppCompatActivity {
         }else {
             initDatabase();
         }
-
-        mainContext=this;
 
         //리사이클러뷰 시작
         historyList=new ArrayList<>();
@@ -123,6 +256,7 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationViewHelper.removeShiftMode(bottomNav);
         //바텀 네비게이션 바
 
+        //기타
         calorie_pbar=(ProgressBar)findViewById(R.id.pbar_calorie);
         percentage_view=(TextView)findViewById(R.id.view_percentage);
         progress=0;
@@ -157,132 +291,6 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-    }
-
-
-    private void setProgress()
-    {
-        if(basicCalRef==null){
-            return;
-        }
-        basicCalRef.addValueEventListener( new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                basicCal = dataSnapshot.getValue(int.class);
-                calculateTodayCal();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    private void calculateTodayCal(){
-        if(basicCal==0)return;
-        todayCal=0;
-        for(int i=0;i<historyList.size();i++){
-            int cal = historyList.get(i).getCalorie();
-            todayCal = todayCal+cal;
-        }
-        calorie_pbar.setMax(100);
-        progress = todayCal*100;
-        progress = progress/basicCal;
-
-        calorie_pbar.setProgress(progress);
-        percentage_view.setText(progress + "%");
-        if(progress <= 100){
-            calorie_pbar.setProgressTintList(ColorStateList.valueOf(Color.parseColor("#FFFACC35")));
-        }else{
-            calorie_pbar.setProgressTintList(ColorStateList.valueOf(Color.parseColor("#FF1100")));
-        }
-    }
-
-    private void updateHistoryList() {
-        if(myHistoryRef==null){
-            return;
-        }
-        myHistoryRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                historyList.clear();
-                for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    FoodItem food = snapshot.getValue(FoodItem.class);
-                    historyList.add(food);
-                }
-                calculateTodayCal();
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    public void initDatabase(){
-        database = FirebaseDatabase.getInstance();
-        basicCalRef = database.getReference().child("user").child(user.getUid()).child("basicCalorie");
-        myHistoryRef = database.getReference().child("userHistory").child(user.getUid()).child(dateStr);
-        isAdmin();
-    }
-
-    private void getDate(){
-        now=System.currentTimeMillis();
-        dateFormat = new SimpleDateFormat("yyyyMMdd", Locale.KOREA);
-        date = new Date(now);
-        dateStr =  dateFormat.format(date);
-    }
-
-    @Override
-    protected void onPostResume() {
-        if(user!=FirebaseAuth.getInstance().getCurrentUser()){
-            user = FirebaseAuth.getInstance().getCurrentUser();
-            if(user==null) {
-                Intent AuthIntent= new Intent(MainActivity.this, AuthMainActivity.class);
-                startActivity(AuthIntent);
-                user=FirebaseAuth.getInstance().getCurrentUser();
-            }else {
-                getDate();
-                initDatabase();
-                adapter.setHistoryRef(myHistoryRef);
-                updateHistoryList();
-                setProgress();
-            }
-        }
-        super.onPostResume();
-    }
-
-    private void isAdmin(){
-        if (database.getReference().child("admin").child(user.getUid())==null) {
-            admin=false;
-            return;
-        }
-        database.getReference().child("admin").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                admin=false;
-                for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    if(snapshot.getKey().equals(user.getUid())){
-                        admin=snapshot.getValue(Boolean.class);
-                        return;
-                    }
-                }
-
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-
-    }
-    @Override
-    public void onBackPressed() {
-        handler.onBackPressed();
     }
 
 }

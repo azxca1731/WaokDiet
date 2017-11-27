@@ -33,7 +33,6 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
     private FirebaseDatabase database;
     private DatabaseReference userHistoryRef;
     private DatabaseReference foodRef;
-    private View.OnClickListener listener;
     private Button buttonSearch;
     private Button buttonAddMenu;
     private EditText edit;
@@ -59,18 +58,24 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void init(){
+
+        //인텐트에서 정보 가져오기
+        dateStr = getIntent().getStringExtra("dateStr");
+        admin=getIntent().getBooleanExtra("admin",false);
+        setAdminXML();
+        //인텐트 끝
+
         //firebase init
         FirebaseAuth mAuth= FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
 
-        dateStr = getIntent().getStringExtra("dateStr");
-        admin=getIntent().getBooleanExtra("admin",false);
         database = FirebaseDatabase.getInstance();
-        setAdminXML();
 
         userHistoryRef =database.getReference().child("userHistory").child(user.getUid()).child(dateStr);
         foodRef = database.getReference().child("food");
         //firebase init end
+
+        //음식을 받아올 리스트
         foodItemList = new ArrayList<FoodItem>();
 
 

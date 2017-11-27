@@ -82,6 +82,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.FoodView
             textCal=(TextView)itemView.findViewById(R.id.foodCal);
 
 
+            //먹은 음식 삭제 기능
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
