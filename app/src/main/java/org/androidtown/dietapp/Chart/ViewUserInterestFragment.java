@@ -56,9 +56,10 @@ public class ViewUserInterestFragment extends android.support.v4.app.Fragment{
     private TextView rank_t_fat;
     private TextView rank_natrium;
 
-    //
+    // 탄단지
     private int carbo, protein, fat;
 
+    // 번들
     Bundle bundle;
 
     //파이어베이스
@@ -198,6 +199,7 @@ public class ViewUserInterestFragment extends android.support.v4.app.Fragment{
     }
 
 
+    // 좌측화면 먹은횟수1위인 음식의 내용
     private void set_rank_food(){
         if(interestList.size()!=0){
             if(activity.isFinishing()) {return;}
@@ -218,6 +220,7 @@ public class ViewUserInterestFragment extends android.support.v4.app.Fragment{
 
     }
 
+    // 조언
     private void advise(){
         if(interestList.size()!=0) {
             int sum = carbo + fat + protein;

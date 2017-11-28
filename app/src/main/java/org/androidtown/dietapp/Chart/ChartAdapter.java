@@ -98,22 +98,6 @@ public class ChartAdapter extends RecyclerView.Adapter<ChartAdapter.FoodViewHold
             imageViewItems=(ImageView)itemView.findViewById(R.id.imageViewItems);
             food = new FoodItem();
 
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Snackbar.make(v,textName.getText()+" 선택",Snackbar.LENGTH_LONG).setAction("add to history", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if(historyRef!=null){
-                                key = UUID.randomUUID().toString();
-                                food.setKey(key);
-                                historyRef.child(key).setValue(food);
-                            }
-                        }
-                    }).show();
-                }
-            });
         }
     }
 

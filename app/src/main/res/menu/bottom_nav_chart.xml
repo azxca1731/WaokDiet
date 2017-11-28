@@ -14,14 +14,14 @@
     <item
         android:id="@+id/action_viewPie"
         android:enabled="true"
-        android:icon="@drawable/ic_userinfo"
+        android:icon="@drawable/ic_chart"
         android:title="탄단지로 보기"
         app:showAsAction="ifRoom"></item>
 
     <item
         android:id="@+id/action_viewInterest"
         android:enabled="true"
-        android:icon="@drawable/ic_chart"
+        android:icon="@drawable/ic_userinfo"
         android:title="음식경향 보기"
         app:showAsAction="ifRoom"></item>
 

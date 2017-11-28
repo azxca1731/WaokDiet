@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:id="@+id/calendar"
         android:layout_height="0px"
-        android:layout_weight="1"
+        android:layout_weight="6"
 
         android:minDate="01/01/2017"
         android:maxDate="12/31/2099"
@@ -20,6 +20,15 @@
 
         android:showWeekNumber="false"
         />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_height="0px"
+        android:layout_weight="1"
+        android:text="선택한 날짜에 먹은 음식들과 \n음식들의 탄수화물 단백질 지방 비율을 보여줍니다. " />
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottom_nav_in_chart"

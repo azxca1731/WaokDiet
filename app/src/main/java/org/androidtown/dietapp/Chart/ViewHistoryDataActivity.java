@@ -31,8 +31,8 @@ public class ViewHistoryDataActivity extends AppCompatActivity {
     Bundle bundle = new Bundle(1);
     Intent intent;
 
+    // 파이어베이스
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-
     DatabaseReference myHistoryRef;
 
     // bottomnav

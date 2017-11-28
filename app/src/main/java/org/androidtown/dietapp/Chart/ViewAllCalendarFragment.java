@@ -75,6 +75,7 @@ public class ViewAllCalendarFragment extends android.support.v4.app.Fragment{
         dates=1;
         sum_of_calorie = new int[31];
 
+        // uid를 전달받음
         bundle = getArguments();
         uid = bundle.getString("uid");
 
@@ -95,6 +96,7 @@ public class ViewAllCalendarFragment extends android.support.v4.app.Fragment{
         return layoutGraphView;
     }
 
+    // 차트그리기
     private void get_datas_and_makeChart(){
         historyRef.addValueEventListener(new ValueEventListener() {
             @Override

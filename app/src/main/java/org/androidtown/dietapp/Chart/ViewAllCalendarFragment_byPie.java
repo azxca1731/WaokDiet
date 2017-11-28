@@ -40,16 +40,18 @@ public class ViewAllCalendarFragment_byPie extends android.support.v4.app.Fragme
     private ViewGroup GraphView;
 
     // 리스트
-    ArrayList<FoodItem> foods = new ArrayList<FoodItem>();
+    private ArrayList<FoodItem> foods = new ArrayList<FoodItem>();
 
-    Bundle bundle;
+    // 번들
+    private Bundle bundle;
 
     // 파이어베이스관련
-    String uid ;
+    private String uid ;
+    private DatabaseReference historyRef;
 
     //탄단지
-    int carbo,protein,fat;
-    TextView textView;
+    private int carbo,protein,fat;
+    private TextView textView;
 
     // 프래그먼트 구조상 분리될때 컨텍스트를 null로 반환해서 여러 에러가 생김;
     // 이를 해결하기 위해 onAttach에서 액티비티와 연결
@@ -64,17 +66,26 @@ public class ViewAllCalendarFragment_byPie extends android.support.v4.app.Fragme
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
+        // 뷰들
         layoutGraphView = (ViewGroup) inflater.inflate(R.layout.activity_view_all_calendar_bypie, container, false);
         GraphView = (ViewGroup) layoutGraphView.findViewById((R.id.view_all_calendar_bypie));
         textView = (TextView)layoutGraphView.findViewById(R.id.text_int_viewCalendar_by_pie);
 
+        // uid획득
         bundle = getArguments();
         uid = bundle.getString("uid");
 
+        // 파이어베이스관련
         DatabaseReference RootRef = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference userRef = RootRef.child("user").child(uid).child("basicCalorie");
-        final DatabaseReference historyRef = RootRef.child("userHistory").child(uid);
+        historyRef  = RootRef.child("userHistory").child(uid);
 
+        get_datas_make_graph();
+
+        return layoutGraphView;
+    }
+
+    // 그래프그리기
+    private void get_datas_make_graph(){
         historyRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -101,11 +112,9 @@ public class ViewAllCalendarFragment_byPie extends android.support.v4.app.Fragme
             public void onCancelled(DatabaseError databaseError) {
             }
         });
-
-        return layoutGraphView;
     }
 
-
+    // 조언
     public void theAdvise(){
         int sum = getCarbo() + getProtein() + getFat();
         float rat_carbo =( (float)getCarbo()/ (float)sum)*100;
@@ -129,6 +138,7 @@ public class ViewAllCalendarFragment_byPie extends android.support.v4.app.Fragme
             textView.setText("탄수화물의 섭취량이 너무 낮습니다.");
         }else textView.setText("적당히 균형잡힌 식단이군요.");
     }
+
     // drawing circle graph
     private void setCircleGraph() {
         CircleGraphVO vo = makeCircleGraphAllSetting();
