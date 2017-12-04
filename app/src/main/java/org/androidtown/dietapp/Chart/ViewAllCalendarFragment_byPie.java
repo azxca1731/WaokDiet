@@ -124,10 +124,14 @@ public class ViewAllCalendarFragment_byPie extends android.support.v4.app.Fragme
             textView.setText("먹은 음식이 없으시네요.");
         }else if(foods.size()<5){
             textView.setText("표본이 적지만 비율은 다음과 같습니다.");
-        } else if(rat_carbo>=45){
-            textView.setText("탄수화물을 너무 많이 섭취하고 있습니다!");
+        } else if(rat_carbo>=45 ) {
+            if (rat_fat >= 35) {
+                textView.setText("탄수화물과 지방을 너무 많이 섭취하고 있습니다!!\n");
+            } else textView.setText("탄수화물을 너무 많이 섭취하고 있습니다!\n");
         }else if(rat_protein>=60){
-            textView.setText("단백질을 너무 많이 섭취하고 있습니다!");
+            if(rat_fat>=35){
+                textView.setText("단백질과 지방을 너무 많이 섭취하고 있습니다!\n");
+            }else textView.setText("단백질을 너무 많이 섭취하고 있습니다!\n");
         }else if(rat_fat>=35){
             textView.setText("지방을 너무 많이 섭취하고 있습니다!");
         }else if(rat_protein<40){

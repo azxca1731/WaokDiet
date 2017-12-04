@@ -39,7 +39,6 @@ public class ViewUserInterestFragment extends android.support.v4.app.Fragment{
 
     // 뷰들
     private ViewGroup layoutGraphView;
-    private ViewGroup GraphView;
     private TextView textView;
     private TextView Whatisit;
 
@@ -91,7 +90,6 @@ public class ViewUserInterestFragment extends android.support.v4.app.Fragment{
         layoutGraphView = (ViewGroup) inflater.inflate(R.layout.activity_view_user_interest, container, false);
         textView = (TextView)layoutGraphView.findViewById(R.id.text_in_viewUser_interest);
         Whatisit = (TextView)layoutGraphView.findViewById(R.id.Whatisit);
-        GraphView  = (ViewGroup) layoutGraphView.findViewById(R.id.view_user_interest);
 
         // 음식상세내용 뷰들
         rank_name = (TextView) layoutGraphView.findViewById(R.id.Rank_Name);
@@ -230,9 +228,13 @@ public class ViewUserInterestFragment extends android.support.v4.app.Fragment{
             if(get_frequencies()<5){
                 textView.setText("표본이 적지만 다음과 같네요.");
             } else if (rat_carbo >= 45) {
-                textView.setText("대부분 고탄수화물 음식들을 드시고 계십니다. \n 탄수화물의 비율을 낮춰주세요.");
+                if( rat_fat >=35) {
+                    textView.setText("고탄수화물, 고지방음식들을 즐기시네요. \n 건강을 위해 이들 음식을 자제하실 필요가 있습니다.");
+                }else textView.setText("대부분 고탄수화물 음식들을 드시고 계십니다. \n 탄수화물의 비율을 낮춰주세요.");
             } else if (rat_protein >= 60) {
-                textView.setText("근육을 키우는게 아니시라면 단백질의 함량이 더 적은 \n 음식을 섭취하는것을 권해드립니다.");
+                if( rat_fat >=35) {
+                    textView.setText("고단백, 고지방음식들을 즐기시네요. \n 건강을 위해 이들 음식을 자제하실 필요가 있습니다.");
+                }else textView.setText("근육을 키우는게 아니시라면 단백질의 함량이 더 적은 \n 음식을 섭취하는것을 권해드립니다.");
             } else if (rat_fat >= 35) {
                 textView.setText("고지방의 음식의 섭취가 너무 잦습니다. \n 현재보다 지방 섭취량을 줄이실 필요가 있습니다.");
             } else if (rat_protein < 40) {
@@ -241,7 +243,7 @@ public class ViewUserInterestFragment extends android.support.v4.app.Fragment{
                 textView.setText("지방의 함량이 적은 음식을 너무 많이 드시고 계십니다..");
             } else if (rat_carbo < 25) {
                 textView.setText("탄수화물의 함량이 적은 음식을 너무 많이 드시고 계십니다.");
-            } else textView.setText("균형잡힌 식단을 선호하시는 군요!");
+            } else textView.setText("탄수화물, 단백질, 지방이 균형잡힌 식단을 선호하시는 군요!");
         }
         else{
             textView.setText("먹은 음식이 없습니다!");

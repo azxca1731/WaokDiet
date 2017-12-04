@@ -217,6 +217,7 @@ public class ViewAllCalendarFragment extends android.support.v4.app.Fragment{
         GraphView.addView(new LineGraphView(activity, vo));
     }
 
+    //조언
     public void theAdvise(){
         if(datas.size() ==0){
             textView.setText("먹은 음식이 없으시네요.");

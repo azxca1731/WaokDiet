@@ -158,10 +158,14 @@ public class ViewCalendarActivity extends AppCompatActivity {
 
     // 조언
     private void theAdvise(){
-        if(rat_carbo>=45){
-            textView.setText("탄수화물을 너무 많이 섭취하고 있습니다!\n");
+        if(rat_carbo>=45 ) {
+            if (rat_fat >= 35) {
+                textView.setText("탄수화물과 지방을 너무 많이 섭취하고 있습니다!!\n");
+            } else textView.setText("탄수화물을 너무 많이 섭취하고 있습니다!\n");
         }else if(rat_protein>=60){
-            textView.setText("단백질을 너무 많이 섭취하고 있습니다!\n");
+            if(rat_fat>=35){
+                textView.setText("단백질과 지방을 너무 많이 섭취하고 있습니다!\n");
+            }else textView.setText("단백질을 너무 많이 섭취하고 있습니다!\n");
         }else if(rat_fat>=35){
             textView.setText("지방을 너무 많이 섭취하고 있습니다!\n");
         }else if(rat_protein<40){
@@ -171,7 +175,7 @@ public class ViewCalendarActivity extends AppCompatActivity {
         }else if(rat_carbo<25) {
             textView.setText("탄수화물의 섭취량이 너무 낮습니다.\n");
         }else textView.setText("적당히 균형잡힌 식단이군요.\n");
-        if(getNatrium()>6){
+        if(getNatrium()>2000){
             textView.append("나트륨의 섭취량이 많습니다.\n");
         }if(getSugar()>50){
             textView.append("당의 섭취량이 많습니다.\n");
