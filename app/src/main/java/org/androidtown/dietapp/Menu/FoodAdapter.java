@@ -1,17 +1,12 @@
 package org.androidtown.dietapp.Menu;
 
 import android.content.Context;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
@@ -24,7 +19,6 @@ import org.androidtown.dietapp.R;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 
 public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder> {
@@ -46,10 +40,6 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
     public FoodAdapter(ArrayList<FoodItem> foodList) {
         this.foodList = foodList;
         storageReference = FirebaseStorage.getInstance().getReference();
-    }
-
-    public void setUidList(ArrayList<FoodItem> foodList) {
-        this.foodList = foodList;
     }
 
     @Override

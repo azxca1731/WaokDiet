@@ -188,6 +188,7 @@ public class EmailPasswordDialogue extends Activity implements
                     }
                 });
         // [END send_email_verification]
+        // [END send_email_verificaton]
     }
 
     private boolean validateForm() {

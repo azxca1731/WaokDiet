@@ -71,10 +71,6 @@ public class FoodItem implements Comparable<FoodItem>{
         return category;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
     public String getName() {
         return name;
     }
@@ -87,72 +83,36 @@ public class FoodItem implements Comparable<FoodItem>{
         return calorie;
     }
 
-    public void setCalorie(int calorie) {
-        this.calorie = calorie;
-    }
-
     public int getFat() {
         return fat;
-    }
-
-    public void setFat(int fat) {
-        this.fat = fat;
     }
 
     public int getCarbohydrate() {
         return carbohydrate;
     }
 
-    public void setCarbohydrate(int carbohydrate) {
-        this.carbohydrate = carbohydrate;
-    }
-
     public int getProtein() {
         return protein;
-    }
-
-    public void setProtein(int protein) {
-        this.protein = protein;
     }
 
     public int getSugar() {
         return sugar;
     }
 
-    public void setSugar(int sugar) {
-        this.sugar = sugar;
-    }
-
     public int getNatrium() {
         return natrium;
-    }
-
-    public void setNatrium(int natrium) {
-        this.natrium = natrium;
     }
 
     public int getCholesterol() {
         return cholesterol;
     }
 
-    public void setCholesterol(int cholesterol) {
-        this.cholesterol = cholesterol;
-    }
-
     public int getSaturatedFat() {
         return saturatedFat;
     }
 
-    public void setSaturatedFat(int saturatedFat) {
-        this.saturatedFat = saturatedFat;
-    }
-
     public int getTransFat() {
         return transFat;
-    }
-
-    public void setTransFat(int transFat) {
-        this.transFat = transFat;
     }
 
     public String getUid() {

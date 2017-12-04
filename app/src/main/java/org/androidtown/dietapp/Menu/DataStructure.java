@@ -22,15 +22,6 @@ public class DataStructure {
         barcodeList=new ArrayList<FoodItem>();
     }
 
-
-    public void setFoodList(ArrayList<FoodItem> foodList) {
-        this.foodList = foodList;
-    }
-
-    public void setBarcodeList(ArrayList<FoodItem> barcodeList) {
-        this.barcodeList = barcodeList;
-    }
-
     public void sort(){
         Comparator<FoodItem> foodItemComparator=new Comparator<FoodItem>(){
             @Override
@@ -50,7 +41,9 @@ public class DataStructure {
                 return o1.getBarcode().compareTo(o2.getBarcode());
             }
         };
-        barcodeList.sort(barcodeComparator);//java 7버전 이후부터 팀소트가 소트 표준이라 팀소트가 불러와짐
+        FoodItem[] changedArray=barcodeList.toArray(new FoodItem[]{});
+        TimSort.sort(changedArray,barcodeComparator);
+        barcodeList=new ArrayList<>(Arrays.asList(changedArray));
     }
 
     public ArrayList<FoodItem> search(String searchedString){

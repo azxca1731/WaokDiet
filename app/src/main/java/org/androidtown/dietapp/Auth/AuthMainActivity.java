@@ -69,7 +69,7 @@ public class AuthMainActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth_main);
 
-
+        getKeyHash(this);
         Log.d(TAG,"현재 토큰값 로그아웃을 하긴 함"+Session.getCurrentSession().getAccessToken());
         // [START KAKAO SIGN IN]
         loginButton = (LoginButton) findViewById(R.id.login_button);
